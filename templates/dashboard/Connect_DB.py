@@ -11,31 +11,49 @@ password = "asdf1234"
 sql_data = "sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121]) as '2016Q4',sum([2017031])as '2017Q1', sum([2017061]) as '2017Q2', sum([2017091]) as '2017Q3', sum([2017121]) as '2017Q4',sum([2018011])as '201801',sum([2018021])as '201802'"
 
 def getLevel1Attributes(target):
+    target_replace = target.replace('[', '').replace(']', '').replace('"', '')
+    if len(target_replace) == 2:
+        aim_ = "'%s'" % target_replace
+    else:
+
+        select_price = target_replace.split(',')
+        aim_ = "'%s'" % select_price[0] + " and ([价格段]='"
+        for i in range(1, len(select_price)):
+            aim_ = aim_ + select_price[i] + '@'
+        aim_ = aim_[:-1] + "')"
+        aim_ = aim_.replace('@', "' or [价格段]='")
+
     conn = pymssql.connect(server, user, password, "BDCI")
     sql = """
                 SELECT top 10
                     sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121]) as '2016Q4',sum([2017031])as '2017Q1', sum([2017061]) as '2017Q2', sum([2017091]) as '2017Q3', sum([2017121]) as '2017Q4',sum([2018011])as '201801',sum([2018021])as '201802'
                     ,[brand]
                 FROM [BDCI_Phone].[dbo].[Summary_1606_1802]
-                where citytier = '全国' and brand != '其它'
+                where brand != '其它' and citytier= """+aim_+"""
                 group by [citytier],[brand]
                 order by '201802' desc
             """
     for_time = sql.count("sum")
     df = pd.read_sql_query(sql, conn)
     scorelist = df['brand'].tolist()
-    result = []
+    result_ = []
     keylist = df.keys().tolist()
     for brand_index in keylist:
         scorelist = df[brand_index].tolist()
-        result.append(scorelist)
-    # 保留两位小数
-    for i_list in range(0, len(result)-1):
-        for i_ in range(0, len(result[i_list])):
-            # print(result[i_list])
-            result[i_list][i_] = float('%.2f'% result[i_list][i_])
+        result_.append(scorelist)
+
+    # 行转列
+
+    result = []
+    for i in range(0, len(result_[0])):
+        aim_list = []
+        for i_ in range(0, len(result_)-1):
+            value_ = float('%.2f'% result_[i_][i])
+            aim_list.append(round(value_*100))
+        result.append(aim_list)
+    result.append(result_[len(result_)-1])
     return result
-# getLevel1Attributes()
+# getLevel1Attributes('a')
 
 
 
