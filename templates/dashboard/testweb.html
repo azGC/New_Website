@@ -1,39 +1,1260 @@
+<!DOCTYPE html>
+{% load staticfiles %}
 
-<!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" type="text/css" href="jquery.monthpicker.css">
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script src="jquery.monthpicker.js"></script>
-<script type="text/javascript">
-$(function(){
-	$('#monthpicker').monthpicker({
-        years: [2015, 2014, 2013, 2012, 2011],
-        topOffset: 6,
-        onMonthSelect: function(m, y) {
-          console.log('Month: ' + m + ', year: ' + y);
-        }
-    });
-	$('#monthly').monthpicker({
-		years: [2015, 2014, 2013, 2012, 2011],
-        topOffset: 6
-	})
-});
-</script>
+    <title>Big data </title>
+    <!-- echart-->
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+    <!-- Bootstrap -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{% static 'vendor/nprogress/nprogress.css' %}" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="{% static 'vendor/iCheck/skins/flat/green.css' %}" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="{% static 'vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css' %}" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="{% static 'polygon/custom.min.css' %}" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 
-<body>
+<body class="nav-md">
+
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="/" class="site_title">
+                        <!--侧栏顶部图标-->
+                        <!--<i class="fa fa-paw"></i> -->
+                        <span>Back Home</span></a>
+                </div>
+
+                <!-- menu profile quick info -->
+                <div class="profile clearfix">
+                    <!-- 用户头像-->
+                    <div class="profile_pic">
+                        <!--<img src="images/img.jpg" alt="..." class="img-circle profile_img">-->
+                    </div>
+                    <!--/用户头像-->
+                    <div class="profile_info">
+                        <!--<span>Detecon</span>-->
+                        <!--<h2>Big data</h2>-->
+                    </div>
+                </div>
+                <!-- /menu profile quick info -->
+
+                <br/>
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <!--<h3>Case</h3>-->
+                        <ul class="nav side-menu">
+                            <!--侧栏菜单-->
+                            <li><a><i class="fa fa-bar-chart-o"></i> Business Case <span
+                                    class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="auto_page.html">Product Index Analysis <br>机型指标分析</a></li>
+                                    <!--<li><a href="people_page.html">Forward Path Analysis <br> 传播路径分析</a></li>-->
+                                    <!--<li><a href="LTP_page.html">Natural Language Processing<br> 自然语言处理</a></li>-->
+                                    <!--<li><a href="CP_page.html" >Customer Partition <br> 客户群体划分</a></li>-->
+                                    <!--<li><a href="Config_page.html">Model and Configuration <br>机型配置</a></li>-->
+                                    <!--<li><a href="price_page.html">Car Residual Value <br> 二手车残值</a></li>-->
+                                </ul>
+                            </li>
+
+                            <!--待开发-->
+                            <!--<li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>-->
+                            <!--<ul class="nav child_menu">-->
+                            <!--<li><a href="form.html">General Form</a></li>-->
+                            <!--<li><a href="form_advanced.html">Advanced Components</a></li>-->
+                            <!--<li><a href="form_validation.html">Form Validation</a></li>-->
+                            <!--<li><a href="form_wizards.html">Form Wizard</a></li>-->
+                            <!--<li><a href="form_upload.html">Form Upload</a></li>-->
+                            <!--<li><a href="form_buttons.html">Form Buttons</a></li>-->
+                            <!--</ul>-->
+                            <!--</li>-->
+
+                        </ul>
+                    </div>
+
+
+                </div>
+                <!-- /sidebar menu -->
+
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav ">
+            <!-- 右上角用户栏-->
+            <div class="nav_menu ">
+                <nav>
+                    <div class="nav toggle ">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                </nav>
+            </div>
+            <!--/右上角用户栏-->
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <!--<div class="row tile_count">-->
+                <!--<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">-->
+                    <!--<span class="count_top"><i class="fa fa-user"></i> Total Users/总用户数</span>-->
+                    <!--<div class="count">939323</div>-->
+                <!--</div>-->
+
+                <!--<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">-->
+                    <!--<span class="count_top"><i class="fa fa-automobile "></i> Total Auto Models/总车型数</span>-->
+                    <!--<div class="count ">24998</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!-- /top tiles -->
+
+            <!--select tiles-->
+            <div class="col-lg-13 ">
+                <form method="get">
+                    <div class="form-group ">
+                        <!--<h4><label for="sel1">Select Brand</label></h4>-->
+                        <select class="form-control" id="sel1">
+                            <option selected="selected">凯美瑞</option>
+                            <option>帕萨特</option>
+                            <option>雅阁</option>
+                            <option>迈锐宝</option>
+                            <option>迈锐宝XL</option>
+                            <option>迈腾</option>
+                            <option>蒙迪欧</option>
+                            <option>名图</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <!-- /select tiles-->
+
+            <!--接收数据库返回信息-->
+            <script type="text/javascript">
+            $(function(){
+            <!--车型选择更改-->
+                $("#sel1").change(function(){
+                    var car = $("#sel1").val();
+                    var dim = $("#selDim").val();
+                    var array1 = [car,dim]
+                    var json_array1 = JSON.stringify(array1);
+                    console.log(json_array1)
+                    <!--LV2数据-->
+                    $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
+                        drawLv2(ret.page_2_lv2);
+                    });
+                    <!--其他图表数据-->
+                    $.getJSON('{% url 'carEchartPage' %}',{'a':car}, function(ret){
+                        drawMarkersMap(ret.page_1_map,ret.page_1_map_max_data,car);
+                        drawTrendlines(ret.page_1_stacked,car);
+                        drawStacked(ret.page_4_purpose);
+                    });
+                });
+
+            <!--维度选择更改-->
+                $("#selDim").change(function(){
+                    var car = $("#sel1").val();
+                    var dim = $("#selDim").val();
+                    var array1 = [car,dim]
+                    var json_array1 = JSON.stringify(array1);
+                    console.log(json_array1)
+                    $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
+                        drawLv2(ret.page_2_lv2);
+                        });
+                });
+
+            <!--页面初始化加载图表-->
+                var car = $("#sel1").val();
+                var dim = $("#selDim").val();
+                var array1 = [car,dim]
+                var json_array1 = JSON.stringify(array1);
+                console.log(json_array1)
+                $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
+                    drawLv2(ret.page_2_lv2);
+                });
+                $.getJSON('{% url 'carEchartPage' %}',{'a':car}, function(ret){
+                    drawMarkersMap(ret.page_1_map,ret.page_1_map_max_data,car);
+                    drawTrendlines(ret.page_1_stacked,car);
+                    drawStacked(ret.page_4_purpose);
+                })
+                var json_array1 = JSON.stringify("凯美瑞,帕萨特,雅阁,迈锐宝,迈锐宝XL,迈腾,蒙迪欧,名图");
+                $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
+                    drawLv1(ret.page_2_lv1);
+                });
+            });
+            </script>
+            <!--/接收数据库返回信息-->
+
+            <!-- 图表行-->
+            <!-- regional 行 -->
+            <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                <h3>Sales Distribution Map/销售分布图</h3>
+                </div>
+            </div>
+            </div>
+
+            <div class="row">
+                <!-- map 图框-->
+                <div class="col-md-7 col-sm-7 col-xs-12">
+                    <div class="x_panel">
+
+                        <!-- 标题-->
+                        <div class="col-md-9">
+                                <h2>Regional distribution of owners
+                                    <br>销量区域分布</br>
+                                </h2>
+                                <div class="clearfix"></div>
+                            </div>
+                        <!--/标题-->
+                        <!-- chart_map-->
+                        <div id="line_1_map" style="width: 100%;height:350%;">
+                                <script type="text/javascript">
+                                            function drawMarkersMap(test_list,max_data,car){
+                                            var dom = document.getElementById("container");
+                                            var drawMarkersMap = echarts.init(document.getElementById('line_1_map'));
+                                            var app = {};
+                                            option = null;
+                                            var geoCoordMap = {
+                                               '海门':[121.15,31.89],
+                                               '鄂尔多斯':[109.781327,39.608266],
+                                               '招远':[120.38,37.35],
+                                               '舟山':[122.207216,29.985295],
+                                               '齐齐哈尔':[123.97,47.33],
+                                               '盐城':[120.13,33.38],
+                                               '赤峰':[118.87,42.28],
+                                               '青岛':[120.33,36.07],
+                                               '乳山':[121.52,36.89],
+                                               '金昌':[102.188043,38.520089],
+                                               '泉州':[118.58,24.93],
+                                               '莱西':[120.53,36.86],
+                                               '日照':[119.46,35.42],
+                                               '胶南':[119.97,35.88],
+                                               '南通':[121.05,32.08],
+                                               '拉萨':[91.11,29.97],
+                                               '云浮':[112.02,22.93],
+                                               '梅州':[116.1,24.55],
+                                               '文登':[122.05,37.2],
+                                               '上海':[121.48,31.22],
+                                               '攀枝花':[101.718637,26.582347],
+                                               '威海':[122.1,37.5],
+                                               '承德':[117.93,40.97],
+                                               '厦门':[118.1,24.46],
+                                               '汕尾':[115.375279,22.786211],
+                                               '潮州':[116.63,23.68],
+                                               '丹东':[124.37,40.13],
+                                               '太仓':[121.1,31.45],
+                                               '曲靖':[103.79,25.51],
+                                               '烟台':[121.39,37.52],
+                                               '福州':[119.3,26.08],
+                                               '瓦房店':[121.979603,39.627114],
+                                               '即墨':[120.45,36.38],
+                                               '抚顺':[123.97,41.97],
+                                               '玉溪':[102.52,24.35],
+                                               '张家口':[114.87,40.82],
+                                               '阳泉':[113.57,37.85],
+                                               '莱州':[119.942327,37.177017],
+                                               '湖州':[120.1,30.86],
+                                               '汕头':[116.69,23.39],
+                                               '昆山':[120.95,31.39],
+                                               '宁波':[121.56,29.86],
+                                               '湛江':[110.359377,21.270708],
+                                               '揭阳':[116.35,23.55],
+                                               '荣成':[122.41,37.16],
+                                               '连云港':[119.16,34.59],
+                                               '葫芦岛':[120.836932,40.711052],
+                                               '常熟':[120.74,31.64],
+                                               '东莞':[113.75,23.04],
+                                               '河源':[114.68,23.73],
+                                               '淮安':[119.15,33.5],
+                                               '泰州':[119.9,32.49],
+                                               '南宁':[108.33,22.84],
+                                               '营口':[122.18,40.65],
+                                               '惠州':[114.4,23.09],
+                                               '江阴':[120.26,31.91],
+                                               '蓬莱':[120.75,37.8],
+                                               '韶关':[113.62,24.84],
+                                               '嘉峪关':[98.289152,39.77313],
+                                               '广州':[113.23,23.16],
+                                               '延安':[109.47,36.6],
+                                               '太原':[112.53,37.87],
+                                               '清远':[113.01,23.7],
+                                               '中山':[113.38,22.52],
+                                               '昆明':[102.73,25.04],
+                                               '寿光':[118.73,36.86],
+                                               '盘锦':[122.070714,41.119997],
+                                               '长治':[113.08,36.18],
+                                               '深圳':[114.07,22.62],
+                                               '珠海':[113.52,22.3],
+                                               '宿迁':[118.3,33.96],
+                                               '咸阳':[108.72,34.36],
+                                               '铜川':[109.11,35.09],
+                                               '平度':[119.97,36.77],
+                                               '佛山':[113.11,23.05],
+                                               '海口':[110.35,20.02],
+                                               '江门':[113.06,22.61],
+                                               '章丘':[117.53,36.72],
+                                               '肇庆':[112.44,23.05],
+                                               '大连':[121.62,38.92],
+                                               '临汾':[111.5,36.08],
+                                               '吴江':[120.63,31.16],
+                                               '石嘴山':[106.39,39.04],
+                                               '沈阳':[123.38,41.8],
+                                               '苏州':[120.62,31.32],
+                                               '茂名':[110.88,21.68],
+                                               '嘉兴':[120.76,30.77],
+                                               '长春':[125.35,43.88],
+                                               '胶州':[120.03336,36.264622],
+                                               '银川':[106.27,38.47],
+                                               '张家港':[120.555821,31.875428],
+                                               '三门峡':[111.19,34.76],
+                                               '锦州':[121.15,41.13],
+                                               '南昌':[115.89,28.68],
+                                               '柳州':[109.4,24.33],
+                                               '三亚':[109.511909,18.252847],
+                                               '自贡':[104.778442,29.33903],
+                                               '吉林':[126.57,43.87],
+                                               '阳江':[111.95,21.85],
+                                               '泸州':[105.39,28.91],
+                                               '西宁':[101.74,36.56],
+                                               '宜宾':[104.56,29.77],
+                                               '呼和浩特':[111.65,40.82],
+                                               '成都':[104.06,30.67],
+                                               '大同':[113.3,40.12],
+                                               '镇江':[119.44,32.2],
+                                               '桂林':[110.28,25.29],
+                                               '张家界':[110.479191,29.117096],
+                                               '宜兴':[119.82,31.36],
+                                               '北海':[109.12,21.49],
+                                               '西安':[108.95,34.27],
+                                               '金坛':[119.56,31.74],
+                                               '东营':[118.49,37.46],
+                                               '牡丹江':[129.58,44.6],
+                                               '遵义':[106.9,27.7],
+                                               '绍兴':[120.58,30.01],
+                                               '扬州':[119.42,32.39],
+                                               '常州':[119.95,31.79],
+                                               '潍坊':[119.1,36.62],
+                                               '重庆':[106.54,29.59],
+                                               '台州':[121.420757,28.656386],
+                                               '南京':[118.78,32.04],
+                                               '滨州':[118.03,37.36],
+                                               '贵阳':[106.71,26.57],
+                                               '无锡':[120.29,31.59],
+                                               '本溪':[123.73,41.3],
+                                               '克拉玛依':[84.77,45.59],
+                                               '渭南':[109.5,34.52],
+                                               '马鞍山':[118.48,31.56],
+                                               '宝鸡':[107.15,34.38],
+                                               '焦作':[113.21,35.24],
+                                               '句容':[119.16,31.95],
+                                               '北京':[116.46,39.92],
+                                               '徐州':[117.2,34.26],
+                                               '衡水':[115.72,37.72],
+                                               '包头':[110,40.58],
+                                               '绵阳':[104.73,31.48],
+                                               '乌鲁木齐':[87.68,43.77],
+                                               '枣庄':[117.57,34.86],
+                                               '杭州':[120.19,30.26],
+                                               '淄博':[118.05,36.78],
+                                               '鞍山':[122.85,41.12],
+                                               '溧阳':[119.48,31.43],
+                                               '库尔勒':[86.06,41.68],
+                                               '安阳':[114.35,36.1],
+                                               '开封':[114.35,34.79],
+                                               '济南':[117,36.65],
+                                               '德阳':[104.37,31.13],
+                                               '温州':[120.65,28.01],
+                                               '九江':[115.97,29.71],
+                                               '邯郸':[114.47,36.6],
+                                               '临安':[119.72,30.23],
+                                               '兰州':[103.73,36.03],
+                                               '沧州':[116.83,38.33],
+                                               '临沂':[118.35,35.05],
+                                               '南充':[106.110698,30.837793],
+                                               '天津':[117.2,39.13],
+                                               '富阳':[119.95,30.07],
+                                               '泰安':[117.13,36.18],
+                                               '诸暨':[120.23,29.71],
+                                               '郑州':[113.65,34.76],
+                                               '哈尔滨':[126.63,45.75],
+                                               '聊城':[115.97,36.45],
+                                               '芜湖':[118.38,31.33],
+                                               '唐山':[118.02,39.63],
+                                               '平顶山':[113.29,33.75],
+                                               '邢台':[114.48,37.05],
+                                               '德州':[116.29,37.45],
+                                               '济宁':[116.59,35.38],
+                                               '荆州':[112.239741,30.335165],
+                                               '宜昌':[111.3,30.7],
+                                               '义乌':[120.06,29.32],
+                                               '丽水':[119.92,28.45],
+                                               '洛阳':[112.44,34.7],
+                                               '秦皇岛':[119.57,39.95],
+                                               '株洲':[113.16,27.83],
+                                               '石家庄':[114.48,38.03],
+                                               '莱芜':[117.67,36.19],
+                                               '常德':[111.69,29.05],
+                                               '保定':[115.48,38.85],
+                                               '湘潭':[112.91,27.87],
+                                               '金华':[119.64,29.12],
+                                               '岳阳':[113.09,29.37],
+                                               '长沙':[113,28.21],
+                                               '衢州':[118.88,28.97],
+                                               '廊坊':[116.7,39.53],
+                                               '菏泽':[115.480656,35.23375],
+                                               '合肥':[117.27,31.86],
+                                               '武汉':[114.31,30.52],
+                                               '大庆':[125.03,46.58]
+                                            };
+                                            option = {
+                                            tooltip: {
+                                                    trigger: 'item'
+                                                },
+                                                toolbox: {
+                                                    show: true,
+                                                    orient: 'vertical',
+                                                    left: 'right',
+                                                    top: 'center',
+                                                    feature : {
+                                                        dataView : {show: true, readOnly: false},
+                                                        saveAsImage : {show: true}
+                                                    }
+                                                },
+                                                visualMap: {
+                                                    min: 0,
+                                                    max: max_data,
+                                                    left: 'left',
+                                                    top: 'bottom',
+                                                    text: ['High','Low'],
+                                                    seriesIndex: [1],
+                                                    inRange: {
+                                                        color: ['#e0ffff', '#006edd']
+                                                    },
+                                                    calculable : true
+                                                },
+                                                geo: {
+                                                    map: 'china',
+                                                    // roam: true,  // 鼠标缩放
+                                                    label: {
+                                                        normal: {
+                                                            show: false,
+                                                            textStyle: {
+                                                                color: 'rgba(0,0,0,0.4)'
+                                                            }
+                                                        }
+                                                    },
+                                                    itemStyle: {
+                                                        normal:{
+                                                            borderColor: 'rgba(0, 0, 0, 0.2)'
+                                                        },
+                                                        emphasis:{
+                                                            areaColor: null,
+                                                            shadowOffsetX: 0,
+                                                            shadowOffsetY: 0,
+                                                            shadowBlur: 20,
+                                                            borderWidth: 0,
+                                                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                        }
+                                                    }
+                                                },
+                                                series : [
+                                                   {
+                                                       type: 'scatter',
+                                                       coordinateSystem: 'geo',
+                                                       symbolSize: 20,
+                                                       symbolRotate: 35,
+                                                       label: {
+                                                           normal: {
+                                                               formatter: '{b}',
+                                                               position: 'right',
+                                                               show: false
+                                                           },
+                                                           emphasis: {
+                                                               show: true
+                                                           }
+                                                       },
+                                                       itemStyle: {
+                                                           normal: {
+                                                                color: '#F06C00'
+                                                           }
+                                                       }
+                                                    },
+                                                    {
+                                                        name: car,
+                                                        type: 'map',
+                                                        geoIndex: 0,
+                                                        data:test_list
+                                                    }
+                                                ]
+                                            };;
+                                                drawMarkersMap.setOption(option);
+                                            }
+
+                                </script>
+                                <!--</div>-->
+
+                            </div>
+                        <!--/chart_map-->
+
+                    </div>
+                </div>
+                <!--/map 图框-->
+
+                <!-- owner 图框-->
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                    <div class="x_panel">
+
+                        <!-- 标题-->
+                        <div class="col-md-12">
+                            <h2>Regional distribution of different model owners<br>车型区域分布</h2>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <!--/标题-->
+                        <!-- chart_owners-->
+                        <div id="line_1_data" style="width: 100%;height:350%;">
+                                <script type="text/javascript">
+                                function drawTrendlines(test_list){
+                                var dom = document.getElementById("container");
+                                var drawTrendlines = echarts.init(document.getElementById('line_1_data'));
+                                var app = {};
+                                option = null;
+                                app.title = '堆叠条形图';
+                                <!--循环得到颜色-->
+                                function getColors(params){
+                                var colorList = ['rgb(112,153,57)','rgb(75,116,153)','rgb(185,142,10)','rgb(185,114,10)','rgb(133,185,158)','rgb(102,113,131)'];
+                                return colorList[params.dataIndex];
+                                }
+
+                                option = {
+                                    tooltip : {
+                                        trigger: 'axis',
+                                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                                        }
+                                    },
+                                    legend: {
+                                        data: ['东北区', '华北区', '华东区', '华南区', '华中区', '西区']
+                                    },
+                                    grid: {
+                                        left: '3%',
+                                        right: '4%',
+                                        bottom: '3%',
+                                        containLabel: true
+                                    },
+                                    xAxis:  {
+                                        type: 'value',
+                                        max: 1
+                                    },
+                                    yAxis: {
+                                        type: 'category',
+                                        <!--定位y轴，详细数据格式请Debug数据查询-->
+                                        data: [test_list[1][0], test_list[2][0], test_list[3][0], test_list[4][0], test_list[5][0],test_list[6][0], test_list[7][0], test_list[8][0]]
+
+                                    },
+                                    series: [
+                                        {
+                                            name: test_list[0][1],
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: false,
+                                                    position: 'insideRight'
+                                                }
+                                            },
+                                            barWidth : 18,
+                                            <!--itemStyle: {-->
+                                            <!--//通常情况下：-->
+                                            <!--normal:{-->
+                                                <!--color: 'rgb(146,208,80)'}-->
+                                        <!--},-->
+                                            data: [test_list[1][1], test_list[2][1], test_list[3][1], test_list[4][1], test_list[5][1],test_list[6][1], test_list[7][1], test_list[8][1]]
+                                        },
+                                        {
+                                            name: test_list[0][2],
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: false,
+                                                    position: 'insideRight'
+                                                },
+                                            },
+                                            <!--itemStyle: {-->
+                                            <!--//通常情况下：-->
+                                            <!--normal:{-->
+                                                <!--color: 'rgb(91,155,213)'}-->
+                                        <!--},-->
+
+                                            data: [test_list[1][2], test_list[2][2], test_list[3][2], test_list[4][2], test_list[5][2],test_list[6][2], test_list[7][2], test_list[8][2]]
+                                        },
+                                        {
+                                            name: test_list[0][3],
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: false,
+                                                    position: 'insideRight'
+                                                }
+                                            },
+                                            <!--itemStyle: {-->
+                                            <!--//通常情况下：-->
+                                            <!--normal:{-->
+                                                <!--color: 'rgb(255,192,0)'}-->
+                                        <!--},-->
+                                            data: [test_list[1][3], test_list[2][3], test_list[3][3], test_list[4][3], test_list[5][3],test_list[6][3], test_list[7][3], test_list[8][3]]
+                                        },
+                                        {
+                                            name: test_list[0][4],
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: false,
+                                                    position: 'insideRight'
+                                                }
+                                            },
+                                            <!--itemStyle: {-->
+                                            <!--//通常情况下：-->
+                                            <!--normal:{-->
+                                                <!--color: 'rgb(255,153,0)'}-->
+                                        <!--},-->
+                                            data: [test_list[1][4], test_list[2][4], test_list[3][4], test_list[4][4], test_list[5][4],test_list[6][4], test_list[7][4], test_list[8][4]]
+                                        },
+                                        {
+                                            name: test_list[0][5],
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: false,
+                                                    position: 'insideRight'
+                                                }
+                                            },
+                                            <!--itemStyle: {-->
+                                            <!--//通常情况下：-->
+                                            <!--normal:{-->
+                                                <!--color: 'rgb(180,255,204)'}-->
+                                        <!--},-->
+                                            data: [test_list[1][5], test_list[2][5], test_list[3][5], test_list[4][5], test_list[5][5],test_list[6][5], test_list[7][5], test_list[8][5]]
+                                        },
+                                        {
+                                            name: test_list[0][6],
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: false,
+                                                    position: 'insideRight'
+                                                }
+                                            },
+                                            <!--itemStyle: {-->
+                                            <!--//通常情况下：-->
+                                            <!--normal:{-->
+                                                <!--color: 'rgb(132,151,176)'}-->
+                                        <!--},-->
+                                            data: [test_list[1][6], test_list[2][6], test_list[3][6], test_list[4][6], test_list[5][6],test_list[6][6], test_list[7][6], test_list[8][6]]
+                                        }
+                                    ]
+                                };
+
+                                drawTrendlines.setOption(option);
+
+                              }
 
 
 
 
 
 
-		<p>2、输入框：<input type="text" class="input" id="monthly"></p>
+
+                                </script>
+
+                            </div>
+                        <!--/chart_owners-->
+
+                    </div>
+                </div>
+                <!--/owner 图框-->
+            </div>
+            <br/>
+            <!--/regional 行 -->
+
+            <!-- purpose 行 -->
+            <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                <h3>Purpose of Vehicle Purchasing/购车目的</h3>
+                </div>
+            </div>
+            </div>
+
+            <div class="row">
+                <!-- purpose 图框 -->
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <!-- 标题-->
+                        <!--<div class="col-md-9">-->
+                            <!--<h2>Purpose of Vehicle Purchasing-->
+                                <!--<br>购车目的-->
+                            <!--</h2>-->
+                            <!--<div class="clearfix"></div>-->
+                        <!--</div>-->
+                        <!--/标题-->
+                        <!--chart_purpose-->
+                        <div id="line_2_purpose" style="width: 100%;height:300%;">
+                            <script type="text/javascript">
+                            function drawStacked(test_list){
+                            var dom = document.getElementById("container");
+                            var drawStacked = echarts.init(document.getElementById('line_2_purpose'));
+                            var app = {};
+                            test_list[0][1]='行业平均水平'
+                            option = {
+                                title : {
+                                    text: '',
+                                    subtext: ''
+                                },
+                                tooltip : {
+                                    trigger: 'axis'
+                                },
+                                legend: {
+                                    data:[test_list[0][1],test_list[0][2]],
+
+                                },
+                                toolbox: {
+                                    show : true,
+                                    feature : {
+                                        dataView : {show: true, readOnly: false},
+                                        saveAsImage : {show: true}
+                                    }
+                                },
+                                calculable : true,
+                                xAxis : [
+                                    {
+
+                                        type : 'category',
+                                        data : ['越野','赛车','运货','商务','约会','跑长途','接送小孩','购物','自驾游','上下班'],
+                                        <!--data : [test_list[1][0],test_list[2][0],test_list[3][0],test_list[4][0],test_list[5][0],test_list[6][0],test_list[7][0],test_list[8][0],test_list[9][0],test_list[10][0]],-->
+                                        axisLabel:{
+                                          rotate:-35, //刻度旋转45度角
+                                          interval:0
+                                        }
+
+                                    }
+                                ],
+                                yAxis : [
+                                    {
+                                        type : 'value'
+                                    }
+                                ],
+                                series : [
+                                    {
+                                        name:test_list[0][1],
+                                        type:'bar',
+                                        data:[test_list[1][1],test_list[2][1],test_list[3][1],test_list[4][1],test_list[5][1],test_list[6][1],test_list[7][1],test_list
+                                            [8][1],test_list[9][1],test_list[10][1]],
+                                        markPoint : {
+                                            data : [
+                                                {type : 'max', name: '最大值'},
+                                                {type : 'min', name: '最小值'}
+                                            ]
+                                        },
+                                        itemStyle:{
+                                             normal:{
+                                               color:'rgb(18,39,105)'
+                                               }
+                                        },
+
+                                    },
+                                    {
+                                        name:test_list[0][2],
+                                        type:'bar',
+                                        data:[test_list[1][2],test_list[2][2],test_list[3][2],test_list[4][2],test_list[5][2],test_list[6][2],test_list[7][2],test_list
+                            [8][2],test_list[9][2],test_list[10][2]],
+                                        markPoint : {
+                                            data : [
+                                                {type : 'max', name: '最大值'},
+                                                {type : 'min', name: '最小值'}
+                                            ]
+                                        },
+
+                                    }
+                                ]
+                            };
+
+                                drawStacked.setOption(option, true);
+
+                            }
 
 
 
+
+
+
+                            </script>
+                        </div>
+                        <!--/chart_purpose-->
+                    </div>
+                </div>
+                <!--/purpose 图框 -->
+            </div>
+            <br/>
+            <!--/purpose 行 -->
+
+            <!-- 一二级指标行 -->
+            <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                <h3>Index Evaluation/指标评价</h3>
+                </div>
+            </div>
+            </div>
+
+            <div class="row">
+                <!-- 一级指标图框-->
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="x_panel">
+                        <!-- 标题-->
+                        <div class="col-md-6">
+                            <h2>Level-1 Index Evaluation<br>一级指标评价</h2>
+                        </div>
+                        <!--/标题-->
+                        <!-- chart_lv1-->
+                        <div id="line_3_lv1" style="width: 100%;height:300%;">
+                            <script type="text/javascript">
+
+                                function drawLv1(test_list){
+                                var dom = document.getElementById("container");
+                                var drawLv1 = echarts.init(document.getElementById('line_3_lv1'));
+                                var app = {};
+                                option = null;
+
+                                <!--为实现动态进行得分赋值-->
+                                var sxAxis=[]=test_list[0];
+                                var aseries=[]=test_list[1];
+                                var bseries=[]=test_list[2];
+                                var cseries=[]=test_list[3];
+                                var dseries=[]=test_list[4];
+                                var eseries=[]=test_list[5];
+                                var fseries=[]=test_list[6];
+                                var gseries=[]=test_list[7];
+                                var hseries=[]=test_list[8];
+
+                                var posList = [
+                                    'left', 'right', 'top', 'bottom',
+                                    'inside',
+                                    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+                                    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+                                ];
+
+                                app.configParameters = {
+                                    rotate: {
+                                        min: -90,
+                                        max: 90
+                                    },
+                                    align: {
+                                        options: {
+                                            left: 'left',
+                                            center: 'center',
+                                            right: 'right'
+                                        }
+                                    },
+                                    verticalAlign: {
+                                        options: {
+                                            top: 'top',
+                                            middle: 'middle',
+                                            bottom: 'bottom'
+                                        }
+                                    },
+                                    position: {
+                                        options: echarts.util.reduce(posList, function (map, pos) {
+                                            map[pos] = pos;
+                                            return map;
+                                        }, {})
+                                    },
+                                    distance: {
+                                        min: 0,
+                                        max: 100
+                                    }
+                                };
+
+                                app.config = {
+                                    rotate: 90,
+                                    align: 'left',
+                                    verticalAlign: 'middle',
+                                    position: 'insideBottom',
+                                    distance: 15,
+                                    onChange: function () {
+                                        var labelOption = {
+                                            normal: {
+                                                rotate: app.config.rotate,
+                                                align: app.config.align,
+                                                verticalAlign: app.config.verticalAlign,
+                                                position: app.config.position,
+                                                distance: app.config.distance
+                                            }
+                                        };
+                                        drawLv1.setOption({
+                                            series: [{
+                                                label: labelOption
+                                            }, {
+                                                label: labelOption
+                                            }, {
+                                                label: labelOption
+                                            }, {
+                                                label: labelOption
+                                            }]
+                                        });
+                                    }
+                                };
+
+
+                                var labelOption = {
+                                    normal: {
+                                        show: false,
+                                        position: app.config.position,
+                                        distance: app.config.distance,
+                                        align: app.config.align,
+                                        verticalAlign: app.config.verticalAlign,
+                                        rotate: app.config.rotate,
+                                        formatter: '{c}  {name|{a}}',
+                                        fontSize: 16,
+                                        rich: {
+                                            name: {
+                                                textBorderColor: '#fff'
+                                            }
+                                        }
+                                    }
+                                };
+
+                                option = {
+                                    color: ['#003366', '#006699', '#4cabce', '#e5323e', '#319ae5', '#e5c131', '#ad96b5', '#0c5259'],
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        axisPointer: {
+                                            type: 'shadow'
+                                        }
+                                    },
+                                    legend: {
+                                        <!--图例-->
+                                        data: [
+                                            sxAxis[0],
+                                            sxAxis[1],
+                                            sxAxis[2],
+                                            sxAxis[3],
+                                            sxAxis[4],
+                                            sxAxis[5],
+                                            sxAxis[6],
+                                            sxAxis[7]
+                                        ],
+                                        <!--设置默认隐藏图例-->
+                                        selected: {
+                                            "雅阁" : false,
+                                            "迈锐宝" : false,
+                                            "迈锐宝XL" : false,
+                                            "迈腾" : false,
+                                            "蒙迪欧" : false,
+                                            "名图" : false
+                                        }
+                                    },
+                                    toolbox: {
+                                        show: true,
+                                        orient: 'vertical',
+                                        left: 'right',
+                                        top: 'center',
+                                        feature: {
+                                            mark: {show: true},
+                                            dataView: {show: true, readOnly: false},
+                                            magicType: {show: true, type: ['line', 'bar']},
+                                            restore: {show: true},
+                                            saveAsImage: {show: true}
+                                        }
+                                    },
+                                    calculable: true,
+                                    xAxis: [
+                                        {
+                                            type: 'category',
+                                            axisTick: {show: false},
+                                            data: ['舒适度','操纵','性价比', '外观', '油耗', '内饰', '动力', '空间'],
+                                            <!--data: ['Comfort','Controllability','Cost performance', 'Exterior', 'Fuel Consumption', 'Interior', 'Power', 'Space'],-->
+                                            axisLabel:{
+                                              rotate:-20, //刻度旋转45度角
+                                              interval:0
+                                            }
+                                        }
+                                    ],
+                                    yAxis: [
+                                        {
+                                            type: 'value',
+                                            min: 3,
+                                            max: 5
+                                        }
+                                    ],
+
+
+                                    series: [
+                                        {
+                                            name: sxAxis[0],
+                                            type: 'line',
+                                            barGap: 0,
+                                            label: labelOption,
+                                            data: aseries
+                                        },
+                                        {
+                                            name: sxAxis[1],
+                                            type: 'line',
+                                            label: labelOption,
+                                            data: bseries
+                                        },
+                                        {
+                                            name: sxAxis[2],
+                                            type: 'line',
+                                            label: labelOption,
+                                            data: cseries
+                                        },
+                                        {
+                                            name: sxAxis[3],
+                                            type: 'line',
+                                            label: labelOption,
+                                            data: dseries
+                                        },
+                                        {
+                                            name: sxAxis[4],
+                                            type: 'line',
+                                            label: labelOption,
+                                            data: eseries
+                                        },
+                                        {
+                                            name: sxAxis[5],
+                                            type: 'line',
+                                            label: labelOption,
+                                            data: fseries
+                                        },
+                                        {
+                                            name: sxAxis[6],
+                                            type: 'line',
+                                            label: labelOption,
+                                            data: gseries
+                                        },
+                                        {
+                                            name: sxAxis[7],
+                                            type: 'line',
+                                            label: labelOption,
+                                            data: hseries
+                                        }
+                                    ]
+                                };
+
+                                drawLv1.setOption(option);
+                                }
+
+
+
+
+
+
+                            </script>
+                        </div>
+                        <!--/chart_lv1-->
+                    </div>
+                </div>
+                <!--/一级指标图框-->
+
+                <!-- 二级指标图框-->
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <!-- 标题+按钮框（内包含Lv2图框）-->
+                    <div class="x_panel">
+                        <!-- 标题+按钮-->
+                            <div class="col-md-6">
+                                <h2>Level-2 Index Evaluation<br>二级指标评价</h2>
+                                <!-- 维度选择按钮 -->
+                                <form method="get">
+                                    <div class="form-group">
+                                        <!--<h4><label for="selDim">Select Dimension</label></h4>-->
+                                        <select class="form-control" id="selDim">
+                                            <option selected="selected">空间</option>
+                                            <option>操控</option>
+                                            <option>舒适</option>
+                                            <option>动力</option>
+                                            <option>油耗</option>
+                                            <option>内饰</option>
+
+                                        </select>
+                                    </div>
+                                </form>
+                                <!--/维度选择按钮 -->
+                            </div>
+                        <!--/标题+按钮-->
+
+                            <!-- Lv2图框-->
+                            <div class="x_content">
+                                <!-- chart_lv2-->
+                                <div id="line_3_lv2" style="width: 100%;height:245%;">
+                                    <script type="text/javascript">
+                                    function drawLv2(test_list){
+                                    var dom = document.getElementById("container");
+                                    var drawLv2 = echarts.init(document.getElementById('line_3_lv2'));
+                                    var app = {};
+                                    var emotion = test_list[0]
+
+                                    option = {
+
+                                        tooltip : {
+                                            trigger: 'axis',
+                                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                                            }
+                                        },
+                                        legend: {
+                                            data: [emotion[1],emotion[2],emotion[3]]
+                                        },
+                                        toolbox: {
+                                            show : true,
+                                            feature : {
+                                                dataView : {show: true, readOnly: false},
+                                                saveAsImage : {show: true}
+                                            }
+                                        },
+                                        grid: {
+                                            left: '3%',
+                                            right: '4%',
+                                            bottom: '3%',
+                                            containLabel: true
+                                        },
+                                        xAxis:  {
+                                            type: 'value'
+                                        },
+                                        yAxis: {
+                                            type: 'category',
+                                            data: [test_list[1][0],test_list[2][0],test_list[3][0],test_list[4][0],test_list[5][0],test_list[6][0],test_list[7][0],test_list[8][0],test_list[9][0]]
+                                        },
+                                        series: [
+                                            <!--满意-->
+                                            {
+                                                name: emotion[1],
+                                                type: 'bar',
+                                                stack: '总量',
+                                                label: {
+                                                    normal: {
+                                                        <!--show: true,-->
+                                                        position: 'insideRight'
+                                                    }
+                                                },
+                                                data: [test_list[1][1],test_list[2][1],test_list[3][1],test_list[4][1],test_list[5][1],test_list[6][1],test_list[7][1],test_list[8][1],test_list[9][1]]
+                                            },
+                                            <!--没感觉-->
+                                            {
+                                                name: emotion[2],
+                                                type: 'bar',
+                                                stack: '总量',
+                                                label: {
+                                                    normal: {
+                                                        <!--show: true,-->
+                                                        position: 'insideRight'
+                                                    }
+                                                },
+                                                data: [test_list[1][2],test_list[2][2],test_list[3][2],test_list[4][2],test_list[5][2],test_list[6][2],test_list[7][2],test_list[8][2],test_list[9][2]]
+                                            },
+                                            <!--不满意-->
+                                            {
+                                                name: emotion[3],
+                                                type: 'bar',
+                                                stack: '总量',
+                                                label: {
+                                                    normal: {
+                                                        <!--show: true,-->
+                                                        position: 'insideRight'
+                                                    }
+                                                },
+                                                data: [test_list[1][3],test_list[2][3],test_list[3][3],test_list[4][3],test_list[5][3],test_list[6][3],test_list[7][3],test_list[8][3],test_list[9][3]]
+                                            }
+                                        ]
+                                    };
+
+                                    drawLv2.setOption(option, true);
+
+                                    }
+
+
+                                    </script>
+                                </div>
+                                <!--/chart_lv2-->
+                            </div>
+                            <!--/Lv2图框-->
+                        </div>
+                    <!--/标题+按钮框（内包含Lv2图框）-->
+                </div>
+                <!--/二级指标图框-->
+            </div>
+            <br/>
+            <!--/一二级指标行 -->
+
+            <!--/图表行-->
+
+        </div>
+        <!-- end of weather widget -->
+
+    </div>
+</div>
+
+
+<!-- footer content  -->
+<footer>
+    <div class="pull-right">
+    Big Data - <a href="/">Home</a>
+    </div>
+    <div class="clearfix"></div>
+</footer>
+<!-- /footer content -->
+
+
+<!-- jQuery -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'vendor/fastclick/lib/fastclick.js' %}"></script>
+<!-- NProgress -->
+<script src="{% static 'vendor/nprogress/nprogress.js' %}"></script>
+<!-- bootstrap-progressbar -->
+<script src="{% static 'vendor/bootstrap-progressbar/bootstrap-progressbar.min.js' %}"></script>
+<!-- iCheck -->
+<script src="{% static 'vendor/icheck/icheck.min.js' %}"></script>
+<!-- Skycons -->
+<script src="{% static 'vendor/skycons/skycons.js' %}"></script>
+<!-- JQVMap -->
+<script src="{% static 'vendor/jqvmap/dist/jquery.vmap.js' %}"></script>
+<script src="{% static 'vendor/jqvmap/dist/maps/jquery.vmap.world.js' %}"></script>
+<script src="{% static 'vendor/jqvmap/examples/js/jquery.vmap.sampledata.js' %}"></script>
+<!-- Custom Theme Scripts -->
+<script src="{% static 'polygon/custom.min.js' %}"></script>
 
 </body>
 </html>
