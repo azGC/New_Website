@@ -44,7 +44,6 @@ def getLevel1Attributes(target):
         result_.append(scorelist)
 
     # 行转列
-
     result = []
     for i in range(0, len(result_[0])):
         aim_list = []
@@ -58,7 +57,18 @@ def getLevel1Attributes(target):
 # getLevel1Attributes("全国")
 
 
-
+# 获取所有机型添加select_list
+def getModel(paraList):
+    conn = pymssql.connect(server, user, password, "BDCI")
+    sql = """
+                  SELECT modelname FROM (SELECT  distinct(brand+' '+model) as modelname
+                  FROM [BDCI_Phone].[dbo].[Summary_1606_1802])a
+                  order by modelname collate Chinese_PRC_CS_AS_KS_WS
+            """
+    df = pd.read_sql_query(sql, conn)
+    model_list = df['modelname'].tolist()
+    return model_list
+getModel(1)
 
 def getLevel2Attributes(paraList):
     list1 = paraList.strip('[]')

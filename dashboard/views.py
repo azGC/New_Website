@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.http import HttpResponse
 from templates.dashboard.Connect_DB \
-    import getLevel1Attributes, getLevel2Attributes
+    import getLevel1Attributes, getModel
 import json
 from django import forms
 from django.shortcuts import render,render_to_response
@@ -57,10 +57,15 @@ def carOwnerChartPage(request):
 # get car page data
 # @login_required
 def carOwnerChart(request):
-    # page 对应原页面 page 1-4
+    # Model_List
     target = request.GET.get('a', '')
+    if target == 'model_list':
+        model_list = getModel(target)
+        return HttpResponse(json.dumps(model_list), content_type='application/json')
+
     page_1_brand = getLevel1Attributes(target)
     page_1_model = getLevel1Attributes(target)
+
     dict = {'page_1_brand': page_1_brand,
                 'page_1_model': page_1_model,}
     return HttpResponse(json.dumps(dict), content_type='application/json')
