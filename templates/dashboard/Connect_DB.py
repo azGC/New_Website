@@ -12,6 +12,7 @@ sql_data = "sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121
 
 def getLevel1Attributes(target):
     target_replace = target.replace('[', '').replace(']', '').replace('"', '')
+    x_list = ['2016Q2','2016Q3','2016Q4', '2017Q1', '2017Q2', '2017Q3', '2017Q4', '201801', '201802']
     if len(target_replace) == 2:
         aim_ = "'%s'" % target_replace
     else:
@@ -52,8 +53,9 @@ def getLevel1Attributes(target):
             aim_list.append(round(value_*100))
         result.append(aim_list)
     result.append(result_[len(result_)-1])
+    result.append(x_list)
     return result
-# getLevel1Attributes('a')
+# getLevel1Attributes("全国")
 
 
 

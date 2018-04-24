@@ -140,21 +140,21 @@
             <script type="text/javascript">
 
             $(function(){
-            <!--车型选择更改-->
+            <!--城市等级选择更改-->
                 $("#citytier").change(function(){
                     var citytier = $("#citytier").val();
                     var price = $("#price").val();
                     var array1 = [citytier,price]
                     var json_array1 = JSON.stringify(array1);
                     console.log(json_array1)
-                    <!--LV1数据-->
+                    <!--Market Share数据-->
                     $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
-                        <!--drawLv2(ret.page_2_lv2);-->
-                        drawLv1(ret.page_2_lv1);
+                        drawbrand(ret.page_1_model);
+                        drawmodel(ret.page_1_model);
                     });
                 });
 
-            <!--维度选择更改-->
+            <!--价格段选择更改-->
                 $("#price").change(function(){
                     var citytier = $("#citytier").val();
                     var price = $("#price").val();
@@ -162,17 +162,31 @@
                     var json_array1 = JSON.stringify(array1);
                     console.log(json_array1)
                     $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
-                        drawLv1(ret.page_2_lv1);
+                        drawbrand(ret.page_1_brand);
+                        });
+                });
+                $("#price_model").change(function(){
+                    var citytier = $("#citytier").val();
+                    var price_model = $("#price_model").val();
+                    var array2 = [citytier,price_model]
+                    var json_array2 = JSON.stringify(array2);
+                    console.log(json_array2)
+                    $.getJSON('{% url 'carEchartPage' %}',{'a':json_array2}, function(ret){
+                        drawmodel(ret.page_1_model);
                         });
                 });
 
             <!--页面初始化加载图表-->
                 var citytier = $("#citytier").val();
                 var price = $("#price").val();
+                var price_model = $("#price_model").val();
                 var array1 = [citytier,price]
+                var array2 = [citytier,price_model]
                 var json_array1 = JSON.stringify("全国");
+                var json_array2 = JSON.stringify("全国");
                 $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
-                    drawLv1(ret.page_2_lv1);
+                    drawbrand(ret.page_1_brand);
+                    drawmodel(ret.page_1_model);
                 });
             });
 
@@ -186,7 +200,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
-                            <h3>Index Evaluation/指标评价</h3>
+                            <h3>Market Share/市场份额</h3>
                         </div>
                     </div>
                 </div>
@@ -198,7 +212,7 @@
                         <div class="x_panel">
                             <!-- 标题-->
                             <div class="col-md-6">
-                                <h2>Level-1 Index Evaluation<br>一级指标评价</h2>
+                                <h2>Brand Market Share<br>品牌份额</h2>
                             </div>
                             <br><br><br><br>
                                 <form method="get">
@@ -217,17 +231,294 @@
                                 <!--/价格段选择按钮 -->
 
                             <!--/标题-->
-                            <!-- chart_lv1-->
-                            <div id="line_3_lv1" style="width: 100%;height:300%;">
+                            <!-- chart_brand-->
+                            <div id="line_1_brand" style="width: 100%;height:300%;">
                                 <script type="text/javascript">
 
-                                function drawLv1(test_list){
+                                function drawbrand(test_list){
                                 var dom = document.getElementById("container");
-                                var drawLv1 = echarts.init(document.getElementById('line_3_lv1'));
+                                var drawbrand = echarts.init(document.getElementById('line_1_brand'));
                                 var app = {};
                                 option = null;
 
                                 <!--为实现动态进行得分赋值-->
+                                var x_list=[]=test_list[11];
+                                <!--图例-->
+                                var sxAxis=[]=test_list[10];
+                                var one_=[]=test_list[0];
+                                var two_ =[]=test_list[1];
+                                var three_=[]=test_list[2];
+                                var four_=[]=test_list[3];
+                                var five_=[]=test_list[4];
+                                var six_=[]=test_list[5];
+                                var seven_=[]=test_list[6];
+                                var eight_=[]=test_list[7];
+                                var nine_=[]=test_list[8];
+                                var ten_=[]=test_list[9];
+
+                                var posList = [
+                                    'left', 'right', 'top', 'bottom',
+                                    'inside',
+                                    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+                                    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+                                ];
+
+                                app.configParameters = {
+                                    rotate: {
+                                        min: -90,
+                                        max: 90
+                                    },
+                                    align: {
+                                        options: {
+                                            left: 'left',
+                                            center: 'center',
+                                            right: 'right'
+                                        }
+                                    },
+                                    verticalAlign: {
+                                        options: {
+                                            top: 'top',
+                                            middle: 'middle',
+                                            bottom: 'bottom'
+                                        }
+                                    },
+                                    position: {
+                                        options: echarts.util.reduce(posList, function (map, pos) {
+                                            map[pos] = pos;
+                                            return map;
+                                        }, {})
+                                    },
+                                    distance: {
+                                        min: 0,
+                                        max: 100
+                                    }
+                                };
+
+                                app.config = {
+                                    rotate: 90,
+                                    align: 'left',
+                                    verticalAlign: 'middle',
+                                    position: 'insideBottom',
+                                    distance: 15,
+                                    onChange: function () {
+                                        var labelOption = {
+                                            normal: {
+                                                rotate: app.config.rotate,
+                                                align: app.config.align,
+                                                verticalAlign: app.config.verticalAlign,
+                                                position: app.config.position,
+                                                distance: app.config.distance
+                                            }
+                                        };
+                                        drawbrand.setOption({
+                                            series: [{
+                                                label: labelOption
+                                            }, {
+                                                label: labelOption
+                                            }, {
+                                                label: labelOption
+                                            }, {
+                                                label: labelOption
+                                            }]
+                                        });
+                                    }
+                                };
+
+
+                                var labelOption = {
+                                    normal: {
+                                        show: false,
+                                        position: app.config.position,
+                                        distance: app.config.distance,
+                                        align: app.config.align,
+                                        verticalAlign: app.config.verticalAlign,
+                                        rotate: app.config.rotate,
+                                        formatter: '{c}  {name|{a}}',
+                                        fontSize: 16,
+                                        rich: {
+                                            name: {
+                                                textBorderColor: '#fff'
+                                            }
+                                        }
+                                    }
+                                };
+
+                                option = {
+                                    color: ['#003366', '#006699', '#4cabce', '#e5323e', '#319ae5', '#e5c131', '#ad96b5', '#0c5259'],
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        axisPointer: {
+                                            type: 'shadow'
+                                        }
+                                    },
+                                    legend: {
+                                        <!--图例-->
+                                        data: [
+                                            sxAxis[0],
+                                            sxAxis[1],
+                                            sxAxis[2],
+                                            sxAxis[3],
+                                            sxAxis[4],
+                                            sxAxis[5],
+                                            sxAxis[6],
+                                            sxAxis[7],
+                                            sxAxis[8],
+                                            sxAxis[9],
+                                            sxAxis[10]
+                                        ],
+                                    },
+                                    toolbox: {
+                                        show: true,
+                                        orient: 'vertical',
+                                        left: 'right',
+                                        top: 'center',
+                                        feature: {
+                                            mark: {show: true},
+                                            dataView: {show: true, readOnly: false},
+                                            magicType: {show: true, type: ['line', 'bar']},
+                                            restore: {show: true},
+                                            saveAsImage: {show: true}
+                                        }
+                                    },
+                                    calculable: true,
+                                    xAxis: [
+                                        {
+                                            type: 'category',
+                                            axisTick: {show: false},
+                                            data: x_list,
+                                            axisLabel:{
+                                              rotate:-20, //刻度旋转45度角
+                                              interval:0
+
+                                            }
+                                        }
+                                    ],
+                                    yAxis: [
+                                        {
+                                            type: 'value',
+                                            axisLabel: {
+                                                  show: true,
+                                                  interval: 'auto',
+                                                  formatter: '{value} %'
+                                                },
+                                            <!--min: 0,-->
+                                            <!--max: 1-->
+                                        }
+                                    ],
+
+
+                                    series: [
+                                        {
+                                            name: sxAxis[0],
+                                            type: 'line',
+                                            barGap: 0,
+                                            label: {formatter:'{value}%'},
+                                            data: one_
+                                        },
+                                        {
+                                            name: sxAxis[1],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: two_
+                                        },
+                                        {
+                                            name: sxAxis[2],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: three_
+                                        },
+                                        {
+                                            name: sxAxis[3],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: four_
+                                        },
+                                        {
+                                            name: sxAxis[4],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: five_
+                                        },
+                                        {
+                                            name: sxAxis[5],
+                                            type: 'line',
+                                            label:{formatter:'{value}%'},
+                                            data: six_
+                                        },
+                                        {
+                                            name: sxAxis[6],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: seven_
+                                        },
+                                        {
+                                            name: sxAxis[7],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: eight_
+                                        },
+                                        {
+                                            name: sxAxis[8],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: nine_
+                                        },
+                                        {
+                                            name: sxAxis[9],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: ten_
+                                        }
+                                    ]
+                                };
+
+                                drawbrand.setOption(option, true);
+                                }
+
+                                </script>
+                            </div>
+                            <!--/chart_lv1-->
+                        </div>
+                    </div>
+                    <!--/一级指标图框-->
+
+                    <!-- 二级指标图框-->
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="x_panel">
+                            <!-- 标题-->
+                            <div class="col-md-6">
+                                <h2>Model Market Share<br>机型份额</h2>
+                            </div>
+                            <br><br><br><br>
+                                <form method="get">
+                                    <div class="form-group">
+                                        <select id="price_model" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                            <option selected="selected"><1500</option>
+                                            <option selected="selected">1500-2500</option>
+                                            <option selected="selected">2500-3500</option>
+                                            <option selected="selected">>3500</option>
+                                        </select>
+                                    </div>
+                                </form>
+
+                            <!-- 价格段选择按钮 -->
+
+                                <!--/价格段选择按钮 -->
+
+                            <!--/标题-->
+                            <!-- chart_model-->
+                            <div id="line_1_model" style="width: 100%;height:300%;">
+                                <script type="text/javascript">
+
+                                function drawmodel(test_list){
+                                var dom = document.getElementById("container");
+                                var drawmodel = echarts.init(document.getElementById('line_1_model'));
+                                var app = {};
+                                option = null;
+
+                                <!--为实现动态进行得分赋值-->
+                                var x_list=[]=test_list[11];
+                                <!--图例-->
                                 var sxAxis=[]=test_list[10];
                                 var one_=[]=test_list[0];
                                 var two_ =[]=test_list[1];
@@ -369,7 +660,7 @@
                                         {
                                             type: 'category',
                                             axisTick: {show: false},
-                                            data: ['2016Q2','2016Q3','2016Q4', '2017Q1', '2017Q2', '2017Q3', '2017Q4', '201801', '201802'],
+                                            data: x_list,
                                             axisLabel:{
                                               rotate:-20, //刻度旋转45度角
                                               interval:0
@@ -456,141 +747,13 @@
                                     ]
                                 };
 
-                                drawLv1.setOption(option, true);
+                                drawmodel.setOption(option, true);
                                 }
 
                                 </script>
                             </div>
                             <!--/chart_lv1-->
                         </div>
-                    </div>
-                    <!--/一级指标图框-->
-
-                    <!-- 二级指标图框-->
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <!-- 标题+按钮框（内包含Lv2图框）-->
-                        <div class="x_panel">
-                            <!-- 标题+按钮-->
-                            <div class="col-md-6">
-                                <h2>Level-2 Index Evaluation<br>二级指标评价</h2>
-                                <!-- 维度选择按钮 -->
-                                <form method="get">
-                                    <div class="form-group">
-                                        <!--<h4><label for="selDim">Select Dimension</label></h4>-->
-                                        <select class="form-control" id="selDim">
-                                            <option selected="selected">空间</option>
-                                            <option>操控</option>
-                                            <option>舒适</option>
-                                            <option>动力</option>
-                                            <option>油耗</option>
-                                            <option>内饰</option>
-
-                                        </select>
-                                    </div>
-                                </form>
-                                <!--/维度选择按钮 -->
-                            </div>
-                            <!--/标题+按钮-->
-
-                            <!-- Lv2图框-->
-                            <div class="x_content">
-                                <!-- chart_lv2-->
-                                <div id="line_3_lv2" style="width: 100%;height:245%;">
-                                    <script type="text/javascript">
-                                    function drawLv2(test_list){
-                                    var dom = document.getElementById("container");
-                                    var drawLv2 = echarts.init(document.getElementById('line_3_lv2'));
-                                    var app = {};
-                                    var emotion = test_list[0]
-
-                                    option = {
-
-                                        tooltip : {
-                                            trigger: 'axis',
-
-                                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                                            }
-                                        },
-                                        legend: {
-                                            data: [emotion[1],emotion[2],emotion[3]]
-                                        },
-                                        toolbox: {
-                                            show : true,
-                                            feature : {
-                                                dataView : {show: true, readOnly: false},
-                                                saveAsImage : {show: true}
-                                            }
-                                        },
-                                        grid: {
-                                            left: '3%',
-                                            right: '4%',
-                                            bottom: '3%',
-                                            containLabel: true
-                                        },
-                                        xAxis:  {
-                                            type: 'value'
-                                        },
-                                        yAxis: {
-                                            type: 'category',
-                                            data: [test_list[1][0],test_list[2][0],test_list[3][0],test_list[4][0],test_list[5][0],test_list[6][0],test_list[7][0],test_list[8][0],test_list[9][0]]
-                                        },
-                                        series: [
-                                            <!--满意-->
-                                            {
-                                                name: emotion[1],
-                                                type: 'bar',
-                                                stack: '总量',
-                                                label: {
-                                                    normal: {
-                                                        <!--show: true,-->
-                                                        position: 'insideRight'
-                                                    }
-                                                },
-                                                data: [test_list[1][1],test_list[2][1],test_list[3][1],test_list[4][1],test_list[5][1],test_list[6][1],test_list[7][1],test_list[8][1],test_list[9][1]]
-                                            },
-                                            <!--没感觉-->
-                                            {
-                                                name: emotion[2],
-                                                type: 'bar',
-                                                stack: '总量',
-                                                label: {
-                                                    normal: {
-                                                        <!--show: true,-->
-                                                        position: 'insideRight'
-                                                    }
-                                                },
-                                                data: [test_list[1][2],test_list[2][2],test_list[3][2],test_list[4][2],test_list[5][2],test_list[6][2],test_list[7][2],test_list[8][2],test_list[9][2]]
-                                            },
-                                            <!--不满意-->
-                                            {
-                                                name: emotion[3],
-                                                type: 'bar',
-                                                stack: '总量',
-                                                label: {
-                                                    normal: {
-                                                        <!--show: true,-->
-                                                        position: 'insideRight'
-                                                    }
-                                                },
-                                                data: [test_list[1][3],test_list[2][3],test_list[3][3],test_list[4][3],test_list[5][3],test_list[6][3],test_list[7][3],test_list[8][3],test_list[9][3]]
-                                            }
-                                        ]
-                                    };
-
-                                    drawLv2.setOption(option, true);
-
-                                    }
-
-
-
-                                    </script>
-                                </div>
-                                <!--/chart_lv2-->
-                            </div>
-                            <!--/Lv2图框-->
-                        </div>
-                        <!--/标题+按钮框（内包含Lv2图框）-->
                     </div>
                     <!--/二级指标图框-->
                 </div>

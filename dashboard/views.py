@@ -59,7 +59,9 @@ def carOwnerChartPage(request):
 def carOwnerChart(request):
     # page 对应原页面 page 1-4
     target = request.GET.get('a', '')
-    page_2_lv1 = getLevel1Attributes(target)
-    dict = {'page_2_lv1': page_2_lv1,}
+    page_1_brand = getLevel1Attributes(target)
+    page_1_model = getLevel1Attributes(target)
+    dict = {'page_1_brand': page_1_brand,
+                'page_1_model': page_1_model,}
     return HttpResponse(json.dumps(dict), content_type='application/json')
 
