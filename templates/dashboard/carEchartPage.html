@@ -792,239 +792,59 @@
                                 function drawnational(test_list){
                                 var dom = document.getElementById("container");
                                 var drawbrand = echarts.init(document.getElementById('line_2_National'));
-                                var app = {};
-                                option = null;
-
-                                <!--为实现动态进行得分赋值-->
-                                var x_list=[]=test_list[11];
-                                <!--图例-->
-                                var sxAxis=[]=test_list[10];
-                                var one_=[]=test_list[0];
-                                var two_ =[]=test_list[1];
-                                var three_=[]=test_list[2];
-                                var four_=[]=test_list[3];
-                                var five_=[]=test_list[4];
-                                var six_=[]=test_list[5];
-                                var seven_=[]=test_list[6];
-                                var eight_=[]=test_list[7];
-                                var nine_=[]=test_list[8];
-                                var ten_=[]=test_list[9];
-
-                                var posList = [
-                                    'left', 'right', 'top', 'bottom',
-                                    'inside',
-                                    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
-                                    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
-                                ];
-
-                                app.configParameters = {
-                                    rotate: {
-                                        min: -90,
-                                        max: 90
-                                    },
-                                    align: {
-                                        options: {
-                                            left: 'left',
-                                            center: 'center',
-                                            right: 'right'
-                                        }
-                                    },
-                                    verticalAlign: {
-                                        options: {
-                                            top: 'top',
-                                            middle: 'middle',
-                                            bottom: 'bottom'
-                                        }
-                                    },
-                                    position: {
-                                        options: echarts.util.reduce(posList, function (map, pos) {
-                                            map[pos] = pos;
-                                            return map;
-                                        }, {})
-                                    },
-                                    distance: {
-                                        min: 0,
-                                        max: 100
-                                    }
-                                };
-
-                                app.config = {
-                                    rotate: 90,
-                                    align: 'left',
-                                    verticalAlign: 'middle',
-                                    position: 'insideBottom',
-                                    distance: 15,
-                                    onChange: function () {
-                                        var labelOption = {
-                                            normal: {
-                                                rotate: app.config.rotate,
-                                                align: app.config.align,
-                                                verticalAlign: app.config.verticalAlign,
-                                                position: app.config.position,
-                                                distance: app.config.distance
-                                            }
-                                        };
-                                        drawbrand.setOption({
-                                            series: [{
-                                                label: labelOption
-                                            }, {
-                                                label: labelOption
-                                            }, {
-                                                label: labelOption
-                                            }, {
-                                                label: labelOption
-                                            }]
-                                        });
-                                    }
-                                };
-
-
-                                var labelOption = {
-                                    normal: {
-                                        show: false,
-                                        position: app.config.position,
-                                        distance: app.config.distance,
-                                        align: app.config.align,
-                                        verticalAlign: app.config.verticalAlign,
-                                        rotate: app.config.rotate,
-                                        formatter: '{c}  {name|{a}}',
-                                        fontSize: 16,
-                                        rich: {
-                                            name: {
-                                                textBorderColor: '#fff'
-                                            }
-                                        }
-                                    }
-                                };
-
                                 option = {
-                                    color: ['#003366', '#006699', '#4cabce', '#e5323e', '#319ae5', '#e5c131', '#ad96b5', '#0c5259'],
-                                    tooltip: {
-                                        trigger: 'axis',
-                                        axisPointer: {
-                                            type: 'shadow'
+
+                                tooltip: {
+                                    trigger: 'axis',
+                                    axisPointer: {
+                                        type: 'line',
+                                        lineStyle: {
+                                            color: 'rgba(0,0,0,0.2)',
+                                            width: 1,
+                                            type: 'solid'
+                                        }
+                                    }
+                                },
+
+                                legend: {
+                                    data: ['DQ', 'TY', 'SS', 'QG', 'SY', 'DD']
+                                },
+
+                                singleAxis: {
+                                    top: 50,
+                                    bottom: 50,
+                                    axisTick: {},
+                                    axisLabel: {},
+                                    type: 'time',
+                                    axisPointer: {
+                                        animation: true,
+                                        label: {
+                                            show: true
                                         }
                                     },
-                                    legend: {
-                                        <!--图例-->
-                                        data: [
-                                            sxAxis[0],
-                                            sxAxis[1],
-                                            sxAxis[2],
-                                            sxAxis[3],
-                                            sxAxis[4],
-                                            sxAxis[5],
-                                            sxAxis[6],
-                                            sxAxis[7],
-                                            sxAxis[8],
-                                            sxAxis[9],
-                                            sxAxis[10]
-                                        ],
-                                    },
-                                    toolbox: {
+                                    splitLine: {
                                         show: true,
-                                        orient: 'vertical',
-                                        left: 'right',
-                                        top: 'center',
-                                        feature: {
-                                            mark: {show: true},
-                                            dataView: {show: true, readOnly: false},
-                                            magicType: {show: true, type: ['line', 'bar']},
-                                            restore: {show: true},
-                                            saveAsImage: {show: true}
+                                        lineStyle: {
+                                            type: 'dashed',
+                                            opacity: 0.2
                                         }
-                                    },
-                                    calculable: true,
-                                    xAxis: [
-                                        {
-                                            type: 'category',
-                                            axisTick: {show: false},
-                                            data: x_list,
-                                            axisLabel:{
-                                              rotate:-20, //刻度旋转45度角
-                                              interval:0
+                                    }
+                                },
 
+                                series: [
+                                    {
+                                        type: 'themeRiver',
+                                        itemStyle: {
+                                            emphasis: {
+                                                shadowBlur: 20,
+                                                shadowColor: 'rgba(0, 0, 0, 0.8)'
                                             }
-                                        }
-                                    ],
-                                    yAxis: [
-                                        {
-                                            type: 'value',
-                                            axisLabel: {
-                                                  show: true,
-                                                  interval: 'auto',
-                                                  formatter: '{value} %'
-                                                },
-                                            <!--min: 0,-->
-                                            <!--max: 1-->
-                                        }
-                                    ],
-
-
-                                    series: [
-                                        {
-                                            name: sxAxis[0],
-                                            type: 'line',
-                                            barGap: 0,
-                                            label: {formatter:'{value}%'},
-                                            data: one_
                                         },
-                                        {
-                                            name: sxAxis[1],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: two_
-                                        },
-                                        {
-                                            name: sxAxis[2],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: three_
-                                        },
-                                        {
-                                            name: sxAxis[3],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: four_
-                                        },
-                                        {
-                                            name: sxAxis[4],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: five_
-                                        },
-                                        {
-                                            name: sxAxis[5],
-                                            type: 'line',
-                                            label:{formatter:'{value}%'},
-                                            data: six_
-                                        },
-                                        {
-                                            name: sxAxis[6],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: seven_
-                                        },
-                                        {
-                                            name: sxAxis[7],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: eight_
-                                        },
-                                        {
-                                            name: sxAxis[8],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: nine_
-                                        },
-                                        {
-                                            name: sxAxis[9],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: ten_
-                                        }
-                                    ]
-                                };
+                                        data: [['2015/11/08',1.4,'DQ'],['2015/11/09',1,'DQ'],['2015/11/10',1,'DQ'],
+                                        ['2015/11/08',0.6,'TY'],['2015/11/09',1,'TY'],['2015/11/10',1,'TY']]
+                                    }
+                                ]
+                            };
 
                                 drawbrand.setOption(option, true);
                                 }

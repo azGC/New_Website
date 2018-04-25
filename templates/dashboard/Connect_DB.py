@@ -46,7 +46,7 @@ def getBrandShare(target):
     for i in range(0, len(result_[0])):
         aim_list = []
         for i_ in range(0, len(result_)-1):
-            value_ = float('%.2f'% result_[i_][i])
+            value_ = float('%.2f' % result_[i_][i])
             aim_list.append(round(value_*100))
         result.append(aim_list)
     result.append(result_[len(result_)-1])
@@ -67,7 +67,7 @@ def getNational(target):
                 SELECT 
                 sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121]) as '2016Q4',sum([2017031])as '2017Q1', sum([2017061]) as '2017Q2', sum([2017091]) as '2017Q3', sum([2017121]) as '2017Q4',sum([2018011])as '201801',sum([2018021])as '201802'
                 ,[价格段]
-                FROM [BDCI_Phone].[dbo].[Summary_1606_1802] where 价格段!='' and citytier="""+aim_+"""
+                FROM [BDCI_Phone].[dbo].[Summary_1606_1802] where citytier="""+aim_+"""
                 group by [价格段] 
             """
     df = pd.read_sql_query(sql, conn)
@@ -76,15 +76,22 @@ def getNational(target):
     for brand_index in keylist:
         scorelist = df[brand_index].tolist()
         result_.append(scorelist)
+    # 行转列
     result = []
-    for i in range(0, len(result_[0])):
-        aim_list = []
-        for i_ in range(0, len(result_)-1):
-            value_ = float('%.2f'% result_[i_][i])
-            aim_list.append(round(value_*100))
-        result.append(aim_list)
-    result.append(result_[len(result_)-1])
-    result.append(x_list)
+    result_2 = []
+    for L in range(len(result_)-1):
+        r = []
+        error_count = result_[L][4]/4
+        r.append(error_count + result_[L][0])
+        r.append(error_count + result_[L][1])
+        r.append(error_count + result_[L][2])
+        r.append(error_count + result_[L][3])
+        result_2.append(r)
+    price_name = result_[len(result_)-1]
+    price_name.pop()  # 删除 null
+    result_2.append(price_name)
+
+
     return result
 getNational('"一线"')
 
