@@ -90,6 +90,15 @@ def getNational(target):
     price_name = result_[len(result_)-1]
     price_name.pop()  # 删除 null
     result_2.append(price_name)
+    # 保留两位小数
+    for i_list in range(0, len(result_2)-1):
+        for i_ in range(0, len(result_2[i_list])):
+            result_2[i_list][i_] = float('%.3f' % result_2[i_list][i_])
+    # 组成返回格式
+    a = []
+    # aim: ['2015/11/08',1.4,'DQ']
+    for i in range(len(result_2)-1):
+        result_2[i]
 
 
     return result
