@@ -120,7 +120,7 @@ def getNational(target):
         if order[2] == '<1500':
             order_4.append(order)
     result = order_1+order_2+order_3+order_4
-
+    result = [result]+[x_list]
     return result
 getNational('"一线"')
 
