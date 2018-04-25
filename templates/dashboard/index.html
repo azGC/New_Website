@@ -41,10 +41,7 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand page-scroll" href="{% url 'index' %}">Big Data </a>
+            <a class="navbar-brand page-scroll" href="{% url 'index' %}">Nielsen </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -53,14 +50,14 @@
             <ul class="nav navbar-nav navbar-right ml-auto">
 
                 <li class="dropdown">
-                    <a class="nav-link js-scroll-trigger active"  data-toggle="dropdown" href="#" style="color:#999999">
+                    <a class="nav-link js-scroll-trigger active"  data-toggle="dropdown" href="#" >
                         Business Case
                         <i class="fa fa-fw fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu nav"  role="menu" style="color:#999999" >
-                        <li><a href="auto_page.html" style="color:#999999">Product Index Analysis <br>机型指标分析</a></li>
-                        <!--<li><a href="people_page.html" style="color:#999999">Forward Path Analysis <br> 传播路径分析</a></li>-->
-                        <!--<li><a href="LTP_page.html" style="color:#999999">Natural Language Processing <br> 自然语言处理</a></li>-->
+                        <li><a href="auto_page.html" style="color:#999999">Market Share Detection <br>市场份额检测</a></li>
+                        <li><a href="auto_page.html" style="color:#999999">User Change Detection <br> 用户换机检测</a></li>
+                        <li><a href="auto_page.html" style="color:#999999">User Portrait <br> 用户画像</a></li>
                         <!--<li><a href="CP_page.html" style="color:#999999">Customer Partition <br> 客户群体划分</a></li>-->
                         <!--<li><a href="Config_page.html" style="color:#999999">Model and Configuration <br>机型配置</a></li>-->
                         <!--<li><a href="price_page.html" style="color:#999999">Car Residual Value <br> 二手车残值</a></li>-->
@@ -77,12 +74,15 @@
 <header>
     <div class="header-content">
         <div class="header-content-inner">
-            <h1 id="homeHeading" style="background-color:rgba(0,0,0,0.6)"> Data-driven <br> Infinite innovation </h1>
+            <h1 id="homeHeading" style="background-color:rgba(0,0,0,0.6)"> Data-driven <br>market research </h1>
             <!--<hr>-->
         </div>
     </div>
 </header>
 
+
+<!--业务简介-->
+<div>
 <section id="services">
     <div class="container">
         <div class="row">
@@ -126,7 +126,7 @@
         </div>
     </div>
 </section>
-
+</div>
 
 <!-- jQuery -->
 <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>

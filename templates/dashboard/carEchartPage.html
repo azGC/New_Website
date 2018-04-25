@@ -193,14 +193,15 @@
                     drawmodel(ret.page_1_model);
                 });
             <!--添加select model-->
-
-                    $.getJSON('{% url 'carEchartPage' %}',{'a':'model_list'}, function(ret){
-                        var selDom = $("#select_model");
-                        for (var i = 0; i <ret.length; i++){
-                            var d = "<option value="+ret[i]+">"+ret[i]+"</option>"
-                            selDom.append(d);//添加option
-                        }
-                    });
+            function select_model(){
+            $.getJSON('{% url 'carEchartPage' %}',{'a':'model_list'}, function(ret){
+                var selDom = $("#select_model");
+                for (var i = 0; i <ret.length; i++){
+                    var d = "<option value="+ret[i]+">"+ret[i]+"</option>"
+                    selDom.append(d);//添加option
+                }
+            })}
+            select_model()
 
             });
 
@@ -769,6 +770,7 @@
                                 };
 
                                 drawmodel.setOption(option, true);
+
                                 }
 
                                 </script>
