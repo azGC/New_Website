@@ -57,7 +57,8 @@ def getBrandShare(target):
 # 获取全国份额
 def getNational(target):
     target_replace = target.replace('[', '').replace(']', '').replace('"', '')
-    x_list = ['2016Q2', '2016Q3', '2016Q4', '2017Q1', '2017Q2', '2017Q3', '2017Q4', '201801', '201802']
+    x_list = ['2016/02', '2016/03', '2016/04', '2017/01', '2017/02', '2017/03', '2017/04', '2018/01', '2018/02']
+
     if len(target_replace) == 2:
         aim_ = "'%s'" % target_replace
     else:
@@ -77,7 +78,6 @@ def getNational(target):
         scorelist = df[brand_index].tolist()
         result_.append(scorelist)
     # 行转列
-    result = []
     result_2 = []
     for L in range(len(result_)-1):
         r = []
@@ -94,12 +94,32 @@ def getNational(target):
     for i_list in range(0, len(result_2)-1):
         for i_ in range(0, len(result_2[i_list])):
             result_2[i_list][i_] = float('%.3f' % result_2[i_list][i_])
-    # 组成返回格式
-    a = []
-    # aim: ['2015/11/08',1.4,'DQ']
-    for i in range(len(result_2)-1):
-        result_2[i]
-
+    # 将数据格式标准化
+    # aim: [['2015/11/08',1.4,'DQ'],['2015/11/09',1,'DQ'],['2015/11/10',1,'DQ']]
+    aim_data_list = []
+    for price_ in range(0, 4):
+        for i in range(0, len(result_2)-1):
+            aim_data = []
+            aim_data.append(x_list[i])
+            aim_data.append(result_2[i][price_])
+            aim_data.append(result_2[len(result_2) - 1][price_])
+            aim_data_list.append(aim_data)
+    # 价格段排序
+    result = []
+    order_1 = []
+    order_2 = []
+    order_3 = []
+    order_4 = []
+    for order in aim_data_list:
+        if order[2] == '>3500':
+            order_1.append(order)
+        if order[2] == '2500-3500':
+            order_2.append(order)
+        if order[2] == '1500-2500':
+            order_3.append(order)
+        if order[2] == '<1500':
+            order_4.append(order)
+    result = order_1+order_2+order_3+order_4
 
     return result
 getNational('"一线"')
