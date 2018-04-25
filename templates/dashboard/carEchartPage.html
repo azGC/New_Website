@@ -66,15 +66,6 @@
 
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
-                    <!-- 用户头像-->
-                    <div class="profile_pic">
-                        <!--<img src="images/img.jpg" alt="..." class="img-circle profile_img">-->
-                    </div>
-                    <!--/用户头像-->
-                    <div class="profile_info">
-                        <!--<span>Detecon</span>-->
-                        <!--<h2>Big data</h2>-->
-                    </div>
                 </div>
                 <!-- /menu profile quick info -->
 
@@ -89,14 +80,13 @@
                             <li><a><i class="fa fa-bar-chart-o"></i> Business Case <span
                                     class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="auto_page.html">Product Index Analysis <br>机型指标分析</a></li>
+                                    <li><a href="auto_page.html">Market Share Detection <br>市场份额检测</a></li>
+                                    <li><a href="auto_page.html">User Change Detection <br> 用户换机检测</a></li>
+                                    <li><a href="auto_page.html">User Portrait <br> 用户画像</a></li>
                                 </ul>
                             </li>
-
                         </ul>
                     </div>
-
-
                 </div>
                 <!-- /sidebar menu -->
 
@@ -104,14 +94,15 @@
         </div>
 
         <!-- top navigation -->
-        <div class="top_nav ">
-            <!-- 右上角用户栏-->
+        <div class="top_nav " align="right" >
+            <!-- 上边栏-->
             <div class="nav_menu ">
-                <nav>
+
+                <!--左上角缩小按钮-->
                     <div class="nav toggle ">
                         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                     </div>
-                </nav>
+                <img src="{% static 'img/Nielsen.png' %}" height="50" width="50" >
             </div>
             <!--/右上角用户栏-->
         </div>
@@ -140,10 +131,6 @@
             <script type="text/javascript">
             $(function(){
 
-
-
-
-
             <!--城市等级选择更改-->
                 $("#citytier").change(function(){
                     var citytier = $("#citytier").val();
@@ -153,8 +140,9 @@
                     console.log(json_array1)
                     <!--Market Share数据-->
                     $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
-                        drawbrand(ret.page_1_model);
+                        drawbrand(ret.page_1_brand);
                         drawmodel(ret.page_1_model);
+                        drawnational(ret.page_1_national);
                     });
                 });
 
@@ -191,7 +179,9 @@
                 $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
                     drawbrand(ret.page_1_brand);
                     drawmodel(ret.page_1_model);
+                    drawnational(ret.page_1_national);
                 });
+
             <!--添加select model-->
             function select_model(){
             $.getJSON('{% url 'carEchartPage' %}',{'a':'model_list'}, function(ret){
@@ -209,9 +199,8 @@
             <!--/接收数据库返回信息-->
 
             <!-- 图表行-->
-
             <div class="row">
-                <!-- 一二级指标行 -->
+                <!-- 市场份额行 -->
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
@@ -781,9 +770,275 @@
                     <!--/机型份额图框-->
                 </div>
                 <br/>
-                <!--/一二级指标行 -->
+                <!--/市场份额行 -->
 
-                <!--/图表行-->
+                <!-- 价格段全国占比行 -->
+                <div class="row">
+                     <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <!-- 标题-->
+                            <div class="col-md-6">
+                                <h2>National Market Share<br>全国份额</h2>
+                            </div>
+                            <!-- 价格段选择按钮 -->
+
+                                <!--/价格段选择按钮 -->
+
+                            <!--/标题-->
+                            <!-- chart_brand-->
+                            <div id="line_2_National" style="width: 100%;height:300%;">
+                                <script type="text/javascript">
+
+                                function drawnational(test_list){
+                                var dom = document.getElementById("container");
+                                var drawbrand = echarts.init(document.getElementById('line_2_National'));
+                                var app = {};
+                                option = null;
+
+                                <!--为实现动态进行得分赋值-->
+                                var x_list=[]=test_list[11];
+                                <!--图例-->
+                                var sxAxis=[]=test_list[10];
+                                var one_=[]=test_list[0];
+                                var two_ =[]=test_list[1];
+                                var three_=[]=test_list[2];
+                                var four_=[]=test_list[3];
+                                var five_=[]=test_list[4];
+                                var six_=[]=test_list[5];
+                                var seven_=[]=test_list[6];
+                                var eight_=[]=test_list[7];
+                                var nine_=[]=test_list[8];
+                                var ten_=[]=test_list[9];
+
+                                var posList = [
+                                    'left', 'right', 'top', 'bottom',
+                                    'inside',
+                                    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+                                    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+                                ];
+
+                                app.configParameters = {
+                                    rotate: {
+                                        min: -90,
+                                        max: 90
+                                    },
+                                    align: {
+                                        options: {
+                                            left: 'left',
+                                            center: 'center',
+                                            right: 'right'
+                                        }
+                                    },
+                                    verticalAlign: {
+                                        options: {
+                                            top: 'top',
+                                            middle: 'middle',
+                                            bottom: 'bottom'
+                                        }
+                                    },
+                                    position: {
+                                        options: echarts.util.reduce(posList, function (map, pos) {
+                                            map[pos] = pos;
+                                            return map;
+                                        }, {})
+                                    },
+                                    distance: {
+                                        min: 0,
+                                        max: 100
+                                    }
+                                };
+
+                                app.config = {
+                                    rotate: 90,
+                                    align: 'left',
+                                    verticalAlign: 'middle',
+                                    position: 'insideBottom',
+                                    distance: 15,
+                                    onChange: function () {
+                                        var labelOption = {
+                                            normal: {
+                                                rotate: app.config.rotate,
+                                                align: app.config.align,
+                                                verticalAlign: app.config.verticalAlign,
+                                                position: app.config.position,
+                                                distance: app.config.distance
+                                            }
+                                        };
+                                        drawbrand.setOption({
+                                            series: [{
+                                                label: labelOption
+                                            }, {
+                                                label: labelOption
+                                            }, {
+                                                label: labelOption
+                                            }, {
+                                                label: labelOption
+                                            }]
+                                        });
+                                    }
+                                };
+
+
+                                var labelOption = {
+                                    normal: {
+                                        show: false,
+                                        position: app.config.position,
+                                        distance: app.config.distance,
+                                        align: app.config.align,
+                                        verticalAlign: app.config.verticalAlign,
+                                        rotate: app.config.rotate,
+                                        formatter: '{c}  {name|{a}}',
+                                        fontSize: 16,
+                                        rich: {
+                                            name: {
+                                                textBorderColor: '#fff'
+                                            }
+                                        }
+                                    }
+                                };
+
+                                option = {
+                                    color: ['#003366', '#006699', '#4cabce', '#e5323e', '#319ae5', '#e5c131', '#ad96b5', '#0c5259'],
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        axisPointer: {
+                                            type: 'shadow'
+                                        }
+                                    },
+                                    legend: {
+                                        <!--图例-->
+                                        data: [
+                                            sxAxis[0],
+                                            sxAxis[1],
+                                            sxAxis[2],
+                                            sxAxis[3],
+                                            sxAxis[4],
+                                            sxAxis[5],
+                                            sxAxis[6],
+                                            sxAxis[7],
+                                            sxAxis[8],
+                                            sxAxis[9],
+                                            sxAxis[10]
+                                        ],
+                                    },
+                                    toolbox: {
+                                        show: true,
+                                        orient: 'vertical',
+                                        left: 'right',
+                                        top: 'center',
+                                        feature: {
+                                            mark: {show: true},
+                                            dataView: {show: true, readOnly: false},
+                                            magicType: {show: true, type: ['line', 'bar']},
+                                            restore: {show: true},
+                                            saveAsImage: {show: true}
+                                        }
+                                    },
+                                    calculable: true,
+                                    xAxis: [
+                                        {
+                                            type: 'category',
+                                            axisTick: {show: false},
+                                            data: x_list,
+                                            axisLabel:{
+                                              rotate:-20, //刻度旋转45度角
+                                              interval:0
+
+                                            }
+                                        }
+                                    ],
+                                    yAxis: [
+                                        {
+                                            type: 'value',
+                                            axisLabel: {
+                                                  show: true,
+                                                  interval: 'auto',
+                                                  formatter: '{value} %'
+                                                },
+                                            <!--min: 0,-->
+                                            <!--max: 1-->
+                                        }
+                                    ],
+
+
+                                    series: [
+                                        {
+                                            name: sxAxis[0],
+                                            type: 'line',
+                                            barGap: 0,
+                                            label: {formatter:'{value}%'},
+                                            data: one_
+                                        },
+                                        {
+                                            name: sxAxis[1],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: two_
+                                        },
+                                        {
+                                            name: sxAxis[2],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: three_
+                                        },
+                                        {
+                                            name: sxAxis[3],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: four_
+                                        },
+                                        {
+                                            name: sxAxis[4],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: five_
+                                        },
+                                        {
+                                            name: sxAxis[5],
+                                            type: 'line',
+                                            label:{formatter:'{value}%'},
+                                            data: six_
+                                        },
+                                        {
+                                            name: sxAxis[6],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: seven_
+                                        },
+                                        {
+                                            name: sxAxis[7],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: eight_
+                                        },
+                                        {
+                                            name: sxAxis[8],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: nine_
+                                        },
+                                        {
+                                            name: sxAxis[9],
+                                            type: 'line',
+                                            label: {formatter:'{value}%'},
+                                            data: ten_
+                                        }
+                                    ]
+                                };
+
+                                drawbrand.setOption(option, true);
+                                }
+
+                                </script>
+                            </div>
+                            <!--/chart_lv1-->
+                        </div>
+                    </div>
+                </div>
+                <!-- /价格段全国占比行 -->
+
+
+
 
             </div>
             <!-- end of weather widget -->

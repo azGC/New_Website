@@ -10,7 +10,7 @@ user = "dtc"
 password = "asdf1234"
 sql_data = "sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121]) as '2016Q4',sum([2017031])as '2017Q1', sum([2017061]) as '2017Q2', sum([2017091]) as '2017Q3', sum([2017121]) as '2017Q4',sum([2018011])as '201801',sum([2018021])as '201802'"
 
-def getLevel1Attributes(target):
+def getBrandShare(target):
     target_replace = target.replace('[', '').replace(']', '').replace('"', '')
     x_list = ['2016Q2','2016Q3','2016Q4', '2017Q1', '2017Q2', '2017Q3', '2017Q4', '201801', '201802']
     if len(target_replace) == 2:
@@ -34,9 +34,7 @@ def getLevel1Attributes(target):
                 group by [citytier],[brand]
                 order by '201802' desc
             """
-    for_time = sql.count("sum")
     df = pd.read_sql_query(sql, conn)
-    scorelist = df['brand'].tolist()
     result_ = []
     keylist = df.keys().tolist()
     for brand_index in keylist:
@@ -54,7 +52,42 @@ def getLevel1Attributes(target):
     result.append(result_[len(result_)-1])
     result.append(x_list)
     return result
-# getLevel1Attributes("全国")
+
+
+# 获取全国份额
+def getNational(target):
+    target_replace = target.replace('[', '').replace(']', '').replace('"', '')
+    x_list = ['2016Q2', '2016Q3', '2016Q4', '2017Q1', '2017Q2', '2017Q3', '2017Q4', '201801', '201802']
+    if len(target_replace) == 2:
+        aim_ = "'%s'" % target_replace
+    else:
+        aim_ = "'%s'" % target_replace[0:2]
+    conn = pymssql.connect(server, user, password, "BDCI")
+    sql = """
+                SELECT 
+                sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121]) as '2016Q4',sum([2017031])as '2017Q1', sum([2017061]) as '2017Q2', sum([2017091]) as '2017Q3', sum([2017121]) as '2017Q4',sum([2018011])as '201801',sum([2018021])as '201802'
+                ,[价格段]
+                FROM [BDCI_Phone].[dbo].[Summary_1606_1802] where 价格段!='' and citytier="""+aim_+"""
+                group by [价格段] 
+            """
+    df = pd.read_sql_query(sql, conn)
+    result_ = []
+    keylist = df.keys().tolist()
+    for brand_index in keylist:
+        scorelist = df[brand_index].tolist()
+        result_.append(scorelist)
+    result = []
+    for i in range(0, len(result_[0])):
+        aim_list = []
+        for i_ in range(0, len(result_)-1):
+            value_ = float('%.2f'% result_[i_][i])
+            aim_list.append(round(value_*100))
+        result.append(aim_list)
+    result.append(result_[len(result_)-1])
+    result.append(x_list)
+    return result
+getNational('"一线"')
+
 
 
 # 获取所有机型添加select_list
@@ -68,7 +101,7 @@ def getModel(paraList):
     df = pd.read_sql_query(sql, conn)
     model_list = df['modelname'].tolist()
     return model_list
-getModel(1)
+
 
 def getLevel2Attributes(paraList):
     list1 = paraList.strip('[]')

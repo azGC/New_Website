@@ -37,11 +37,14 @@
 
 <body>
 
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top"  style="background-color:rgba(0,0,0,0.18)">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand page-scroll" href="{% url 'index' %}">Nielsen </a>
+            <a href="/">
+            <img src="{% static 'img/Nielsen.png' %}" height="50" width="50" >
+            </a>
+                <!--<a class="navbar-brand page-scroll" href="{% url 'index' %}">Nielsen </a>-->
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -50,7 +53,7 @@
             <ul class="nav navbar-nav navbar-right ml-auto">
 
                 <li class="dropdown">
-                    <a class="nav-link js-scroll-trigger active"  data-toggle="dropdown" href="#" >
+                    <a class="nav-link js-scroll-trigger active" data-toggle="dropdown" href="#" >
                         Business Case
                         <i class="fa fa-fw fa-caret-down"></i>
                     </a>
@@ -58,9 +61,6 @@
                         <li><a href="auto_page.html" style="color:#999999">Market Share Detection <br>市场份额检测</a></li>
                         <li><a href="auto_page.html" style="color:#999999">User Change Detection <br> 用户换机检测</a></li>
                         <li><a href="auto_page.html" style="color:#999999">User Portrait <br> 用户画像</a></li>
-                        <!--<li><a href="CP_page.html" style="color:#999999">Customer Partition <br> 客户群体划分</a></li>-->
-                        <!--<li><a href="Config_page.html" style="color:#999999">Model and Configuration <br>机型配置</a></li>-->
-                        <!--<li><a href="price_page.html" style="color:#999999">Car Residual Value <br> 二手车残值</a></li>-->
                     </ul>
                 </li>
 

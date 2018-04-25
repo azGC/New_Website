@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.http import HttpResponse
 from templates.dashboard.Connect_DB \
-    import getLevel1Attributes, getModel
+    import getBrandShare, getModel, getNational
 import json
 from django import forms
 from django.shortcuts import render,render_to_response
@@ -63,10 +63,13 @@ def carOwnerChart(request):
         model_list = getModel(target)
         return HttpResponse(json.dumps(model_list), content_type='application/json')
 
-    page_1_brand = getLevel1Attributes(target)
-    page_1_model = getLevel1Attributes(target)
+    page_1_brand = getBrandShare(target)
+    page_1_model = getBrandShare(target)
+    page_1_national = getNational(target)
 
     dict = {'page_1_brand': page_1_brand,
-                'page_1_model': page_1_model,}
+                'page_1_model': page_1_model,
+                'page_1_national': page_1_national,
+            }
     return HttpResponse(json.dumps(dict), content_type='application/json')
 
