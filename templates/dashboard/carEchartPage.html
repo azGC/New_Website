@@ -180,6 +180,7 @@
                     drawbrand(ret.page_1_brand);
                     drawmodel(ret.page_1_model);
                     drawnational(ret.page_1_national);
+                    drawStacked(ret.page_1_top)
                 });
 
             <!--添加select model-->
@@ -209,7 +210,7 @@
                     </div>
                 </div>
 
-
+                <!-- 品牌与机型份额行-->
                 <div class="row">
                     <!-- 品牌份额图框-->
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -769,8 +770,106 @@
                     </div>
                     <!--/机型份额图框-->
                 </div>
-                <br/>
-                <!--/市场份额行 -->
+                <!--/品牌与机型份额行-->
+
+                <!-- 机型排名行-->
+                <div class="row">
+                    <!-- purpose 图框 -->
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                                 <div class="col-md-6">
+                                    <h2>National of The Top 15 Models<br>全国存量占比排名前15机型</h2>
+                                </div>
+                            <div id="line_2_purpose" style="width: 100%;height:400%;">
+                                <script type="text/javascript">
+                                function drawStacked(test_list){
+                                var dom = document.getElementById("container");
+                                var drawStacked = echarts.init(document.getElementById('line_2_purpose'));
+                                var app = {};
+
+                                option = {
+                                    title : {
+                                        text: '',
+                                        subtext: ''
+                                    },
+                                    tooltip : {
+                                        trigger: 'axis'
+                                    },
+                                    legend: {
+                                        data:['2018年1月', '2018年2月'],
+
+                                    },
+                                    toolbox: {
+                                        show : true,
+                                        feature : {
+                                            dataView : {show: true, readOnly: false},
+                                            saveAsImage : {show: true}
+                                        }
+                                    },
+                                    calculable : true,
+                                    xAxis : [
+                                        {
+
+                                            type : 'category',
+                                            data : test_list[0],
+                                            <!--data : [test_list[1][0],test_list[2][0],test_list[3][0],test_list[4][0],test_list[5][0],test_list[6][0],test_list[7][0],test_list[8][0],test_list[9][0],test_list[10][0]],-->
+                                            axisLabel:{
+                                              rotate:-20, //刻度旋转45度角
+                                              interval:0
+                                            }
+
+                                        }
+                                    ],
+                                    yAxis : [
+                                        {
+                                            type : 'value'
+                                        }
+                                    ],
+                                    series : [
+                                        {
+                                            name:'2018年2月',
+                                            type:'bar',
+                                            data:test_list[1],
+                                            markPoint : {
+                                                data : [
+                                                    {type : 'max', name: '最大值'},
+                                                    {type : 'min', name: '最小值'}
+                                                ]
+                                            },
+                                            itemStyle:{
+                                                 normal:{
+                                                   color:'rgb(18,39,105)'
+                                                   }
+                                            },
+
+                                        },
+                                        {
+                                            name:'2018年1月',
+                                            type:'bar',
+                                            data:test_list[2],
+                                            markPoint : {
+                                                data : [
+                                                    {type : 'max', name: '最大值'},
+                                                    {type : 'min', name: '最小值'}
+                                                ]
+                                            },
+
+                                        }
+                                    ]
+                                };
+
+                                    drawStacked.setOption(option, true);
+
+                                }
+
+                                </script>
+                            </div>
+                            <!--/chart_purpose-->
+                        </div>
+                    </div>
+                    <!--/purpose 图框 -->
+                </div>
+                <!--/机型排名行 -->
 
                 <!-- 价格段全国占比行 -->
                 <div class="row">
@@ -778,7 +877,7 @@
                         <div class="x_panel">
                             <!-- 标题-->
                             <div class="col-md-6">
-                                <h2>National Market Share<br>全国份额</h2>
+                                <h2>Price Segment Share<br>价格段份额</h2>
                             </div>
                             <!-- 价格段选择按钮 -->
 
@@ -855,7 +954,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- /价格段全国占比行 -->
+                <!--/价格段全国占比行 -->
+
+
 
 
 

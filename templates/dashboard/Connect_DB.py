@@ -138,7 +138,40 @@ def getModel(paraList):
     model_list = df['modelname'].tolist()
     return model_list
 
+# 获取top20机型 每次修改日期
+def getTop():
+    conn = pymssql.connect(server, user, password, "BDCI")
+    sql = """
+                SELECT TOP 15 
+                 [brand]+' '+[model] as name
+                ,[2018011]
+                ,[2018021]
+                FROM [BDCI_Phone].[dbo].[Summary_1606_1802] 
+                where citytier='全国' and brand != '其它' and model != '其它'
+                order by [2018021] desc
+                """
+    df = pd.read_sql_query(sql, conn)
+    name = df['name'].tolist()
+    this_month = df['2018021'].tolist()
+    last_month = df['2018011'].tolist()
 
+    for i_list in range(0, len(this_month)):
+        this_month[i_list] = float('%.4f' % this_month[i_list])
+        last_month[i_list] = float('%.4f' % last_month[i_list])
+
+    result = []
+    result.append(name)
+    result.append(this_month)
+    result.append(last_month)
+
+    return result
+# getTop()
+
+
+
+
+
+# ===========================================================================
 def getLevel2Attributes(paraList):
     list1 = paraList.strip('[]')
     list2 = list1.replace('"','')
