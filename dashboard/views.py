@@ -2,10 +2,10 @@
 from __future__ import unicode_literals
 from django.http import HttpResponse
 from templates.dashboard.Connect_DB \
-    import getBrandShare, getModel, getNational, getTop
+    import getBrandShare, getModelShare, getModelList, getNational, getTop
 import json
 from django import forms
-from django.shortcuts import render,render_to_response
+from django.shortcuts import render, render_to_response
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 
@@ -60,18 +60,28 @@ def carOwnerChart(request):
     # Model_List
     target = request.GET.get('a', '')
     if target == 'model_list':
-        model_list = getModel(target)
+        model_list = getModelList(target)
         return HttpResponse(json.dumps(model_list), content_type='application/json')
+    # 进入model查找
+    if target != '"全国"':
+        target_list = eval(target)
+        if len(target_list) == 3:
+            # model_number = target_list[2].count(',') + 1
+            page_1_model = getModelShare(target_list)
+            # dict = {
+            #     'page_1_model': page_1_model,
+            #     'model_number': model_number
+            # }
+            return HttpResponse(json.dumps(page_1_model), content_type='application/json')
 
-    page_1_brand = getBrandShare(target)
-    page_1_model = getBrandShare(target)
-    page_1_national = getNational(target)
-    page_1_top = getTop()
+    else:
+        page_1_brand = getBrandShare(target)
+        page_1_national = getNational(target)
+        page_1_top = getTop()
 
-    dict = {'page_1_brand': page_1_brand,
-                'page_1_model': page_1_model,
-                'page_1_national': page_1_national,
-                'page_1_top': page_1_top
-            }
-    return HttpResponse(json.dumps(dict), content_type='application/json')
+        dict = {'page_1_brand': page_1_brand,
+                    'page_1_national': page_1_national,
+                    'page_1_top': page_1_top
+                }
+        return HttpResponse(json.dumps(dict), content_type='application/json')
 

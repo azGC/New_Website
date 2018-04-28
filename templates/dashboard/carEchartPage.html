@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
@@ -129,24 +129,56 @@
 
             <!--接收数据库返回信息-->
             <script type="text/javascript">
-            $(function(){
+            <!--提前添加select model-->
+            function select_model(){
+                $.getJSON('{% url 'carEchartPage' %}',{'a':'model_list'}, function(ret){
+                    var selDom = $("#select_model");
+                    for (var i = 0; i <ret.length; i++){
+                        var d = "<option name='chkId' value="+ret[i]+">"+ret[i]+"</option>"
+                        selDom.append(d);//添加option
+                    }
+                })
+            }
+            select_model()
 
-            <!--城市等级选择更改-->
+            $(document).ready(function(){
+
+                <!--页面初始化加载图表-->
+                var citytier = $("#citytier").val();
+                var price = $("#price").val();
+                var array1 = [citytier,price]
+                var json_array1 = JSON.stringify("全国");
+                <!--Brand Share数据-->
+                $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
+                    drawbrand(ret.page_1_brand);
+                    drawnational(ret.page_1_national);
+                    drawStacked(ret.page_1_top);
+                });
+
+                <!--城市等级选择更改-->
                 $("#citytier").change(function(){
                     var citytier = $("#citytier").val();
                     var price = $("#price").val();
                     var array1 = [citytier,price]
                     var json_array1 = JSON.stringify(array1);
                     console.log(json_array1)
-                    <!--Market Share数据-->
+
+                    <!--Brand Share数据-->
                     $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
                         drawbrand(ret.page_1_brand);
-                        drawmodel(ret.page_1_model);
                         drawnational(ret.page_1_national);
+                    });
+
+                    <!--Model Share数据-->
+                    var model_ = $("#select_value").text();
+                    var array2 = [citytier, 'price_model', model_]
+                    var json_array2 = JSON.stringify(array2);
+                    $.getJSON('{% url 'carEchartPage' %}',{'a':json_array2}, function(ret){
+                        drawmodel(ret.page_1_model);
                     });
                 });
 
-            <!--价格段选择更改-->
+                <!--价格段选择更改-->
                 $("#price").change(function(){
                     var citytier = $("#citytier").val();
                     var price = $("#price").val();
@@ -157,43 +189,18 @@
                         drawbrand(ret.page_1_brand);
                         });
                 });
-                $("#price_model").change(function(){
+
+                <!--机型名选择更改-->
+                $("#begin").click(function(){
                     var citytier = $("#citytier").val();
-                    var price_model = $("#price_model").val();
-                    var array2 = [citytier,price_model]
+                    var model_ = $("[data-id=select_model]").text();
+                    <!--model_=$("button[data-id='select_model']").title-->
+                    var array2 = [citytier, 'price_model', model_]
                     var json_array2 = JSON.stringify(array2);
-                    console.log(json_array2)
-                    $.getJSON('{% url 'carEchartPage' %}',{'a':json_array2}, function(ret){
-                        drawmodel(ret.page_1_model);
+                    $.getJSON('{% url 'carEchartPage' %}',{'a':json_array2}, function(ret_){
+                        drawmodel(ret_);
                         });
                 });
-
-            <!--页面初始化加载图表-->
-                var citytier = $("#citytier").val();
-                var price = $("#price").val();
-                var price_model = $("#price_model").val();
-                var array1 = [citytier,price]
-                var array2 = [citytier,price_model]
-                var json_array1 = JSON.stringify("全国");
-                var json_array2 = JSON.stringify("全国");
-                $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
-                    drawbrand(ret.page_1_brand);
-                    drawmodel(ret.page_1_model);
-                    drawnational(ret.page_1_national);
-                    drawStacked(ret.page_1_top)
-                });
-
-            <!--添加select model-->
-            function select_model(){
-            $.getJSON('{% url 'carEchartPage' %}',{'a':'model_list'}, function(ret){
-                var selDom = $("#select_model");
-                for (var i = 0; i <ret.length; i++){
-                    var d = "<option value="+ret[i]+">"+ret[i]+"</option>"
-                    selDom.append(d);//添加option
-                }
-            })}
-            select_model()
-
             });
 
             </script>
@@ -201,7 +208,7 @@
 
             <!-- 图表行-->
             <div class="row">
-                <!-- 市场份额行 -->
+                <!-- 市场份额 -->
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
@@ -498,20 +505,12 @@
                             <!--按钮框-->
                                 <form method="get">
                                     <div class="form-group">
-                                        <!-- 价格段选择按钮 -->
-                                        <select id="price_model" class="selectpicker bla bla bli" multiple data-live-search="true">
-                                            <option selected="selected"><1500</option>
-                                            <option selected="selected">1500-2500</option>
-                                            <option selected="selected">2500-3500</option>
-                                            <option selected="selected">>3500</option>
-                                        </select>
-                                        <!--/价格段选择按钮-->
-
-                                        <!--机型选择按钮-->
+                                        <!-- 机型选择按钮 -->
                                         <select id="select_model" class="selectpicker bla bla bli" multiple data-live-search="false">
 
                                         </select>
                                         <!--/机型选择按钮 -->
+                                        <button type="button" id="begin">查找</button>
                                     </div>
                                 </form>
                             <!--/按钮框-->
@@ -528,20 +527,10 @@
                                 var app = {};
                                 option = null;
 
-                                <!--为实现动态进行得分赋值-->
-                                var x_list=[]=test_list[11];
                                 <!--图例-->
-                                var sxAxis=[]=test_list[10];
-                                var one_=[]=test_list[0];
-                                var two_ =[]=test_list[1];
-                                var three_=[]=test_list[2];
-                                var four_=[]=test_list[3];
-                                var five_=[]=test_list[4];
-                                var six_=[]=test_list[5];
-                                var seven_=[]=test_list[6];
-                                var eight_=[]=test_list[7];
-                                var nine_=[]=test_list[8];
-                                var ten_=[]=test_list[9];
+                                x_list = test_list[4];
+
+                                var sxAxis=[];
 
                                 var posList = [
                                     'left', 'right', 'top', 'bottom',
@@ -693,73 +682,30 @@
                                         }
                                     ],
 
-
-                                    series: [
-                                        {
-                                            name: sxAxis[0],
-                                            type: 'line',
-                                            barGap: 0,
-                                            label: {formatter:'{value}%'},
-                                            data: one_
-                                        },
-                                        {
-                                            name: sxAxis[1],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: two_
-                                        },
-                                        {
-                                            name: sxAxis[2],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: three_
-                                        },
-                                        {
-                                            name: sxAxis[3],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: four_
-                                        },
-                                        {
-                                            name: sxAxis[4],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: five_
-                                        },
-                                        {
-                                            name: sxAxis[5],
-                                            type: 'line',
-                                            label:{formatter:'{value}%'},
-                                            data: six_
-                                        },
-                                        {
-                                            name: sxAxis[6],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: seven_
-                                        },
-                                        {
-                                            name: sxAxis[7],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: eight_
-                                        },
-                                        {
-                                            name: sxAxis[8],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: nine_
-                                        },
-                                        {
-                                            name: sxAxis[9],
-                                            type: 'line',
-                                            label: {formatter:'{value}%'},
-                                            data: ten_
+                                    series: function(){
+                                        var serie=[];
+                                        var dataArr=[];
+                                        var aa = test_list[test_list.length-1];
+                                        for (var l =0; l < test_list.length-2; i++){
+                                            dataArr.push(test_list[test_list.length]);
                                         }
-                                    ]
+                                        for( var i=0;i < aa.length;i++){
+                                        var item={
+                                        name:aa[i],
+                                        data:dataArr[i],
+                                        <!--drawmodel.setOption(option, true);-->
+                                        type:'line',
+                                        label: {formatter:'{value}%'},
+                                        }
+                                        serie.push(item);
+                                        };
+                                        return serie;
+                                    }()
                                 };
 
+
                                 drawmodel.setOption(option, true);
+
 
                                 }
 
@@ -956,13 +902,8 @@
                 </div>
                 <!--/价格段全国占比行 -->
 
-
-
-
-
-
             </div>
-            <!-- end of weather widget -->
+            <!--/图标行 -->
 
         </div>
     </div>

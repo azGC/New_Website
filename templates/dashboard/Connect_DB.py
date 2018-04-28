@@ -2,14 +2,16 @@
 from __future__ import unicode_literals,division
 import pymssql
 import pandas as pd
-import urllib
+
 
 server = "SQLDEV02\sql"
 server = "127.0.0.1"
 user = "dtc"
 password = "asdf1234"
+# 修改sql date
 sql_data = "sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121]) as '2016Q4',sum([2017031])as '2017Q1', sum([2017061]) as '2017Q2', sum([2017091]) as '2017Q3', sum([2017121]) as '2017Q4',sum([2018011])as '201801',sum([2018021])as '201802'"
 
+# 获取品牌份额
 def getBrandShare(target):
     target_replace = target.replace('[', '').replace(']', '').replace('"', '')
     x_list = ['2016Q2','2016Q3','2016Q4', '2017Q1', '2017Q2', '2017Q3', '2017Q4', '201801', '201802']
@@ -27,7 +29,7 @@ def getBrandShare(target):
     conn = pymssql.connect(server, user, password, "BDCI")
     sql = """
                 SELECT top 10
-                    sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121]) as '2016Q4',sum([2017031])as '2017Q1', sum([2017061]) as '2017Q2', sum([2017091]) as '2017Q3', sum([2017121]) as '2017Q4',sum([2018011])as '201801',sum([2018021])as '201802'
+                    """+sql_data+"""
                     ,[brand]
                 FROM [BDCI_Phone].[dbo].[Summary_1606_1802]
                 where brand != '其它' and citytier= """+aim_+"""
@@ -53,8 +55,73 @@ def getBrandShare(target):
     result.append(x_list)
     return result
 
+# 获取机型份额
+def getModelShare(target):
+    # print(target)
 
-# 获取全国份额
+    x_list = ['2016Q2','2016Q3','2016Q4', '2017Q1', '2017Q2', '2017Q3', '2017Q4', '201801', '201802']
+    city = target[0]
+    city = "'%s'" % city
+    mode_ = target[2][:-1]
+    model = mode_.replace(', ', '\' or name = \'')
+    model = "'%s'" % model
+
+    conn = pymssql.connect(server, user, password, "BDCI")
+    sql = """
+                SELECT * FROM(SELECT
+                   [citytier]
+                  ,[2016061]
+                  ,[2016071]
+                  ,[2016081]
+                  ,[2016091]
+                  ,[2016101]
+                  ,[2016111]
+                  ,[2016121]
+                  ,[2017011]
+                  ,[2017021]
+                  ,[2017031]
+                  ,[2017041]
+                  ,[2017051]
+                  ,[2017061]
+                  ,[2017071]
+                  ,[2017081]
+                  ,[2017091]
+                  ,[2017101]
+                  ,[2017111]
+                  ,[2017121]
+                  ,[2018011]
+                  ,[2018021]
+                  ,brand+' '+model as name
+                FROM [BDCI_Phone].[dbo].[Summary_1606_1802])a 
+                WHERE  citytier = """+city+""" and (name ="""+model+""" )
+                
+            """
+    df = pd.read_sql_query(sql, conn)
+    result_ = []
+    keylist = df.keys().tolist()
+    for brand_index in keylist:
+        scorelist = df[brand_index].tolist()
+        result_.append(scorelist)
+    del result_[0]  # 删除city元素
+
+    # 行转列
+    result = []
+    for i in range(0, len(result_[0])):
+        aim_list = []
+        for i_ in range(0, len(result_)-1):
+            val = result_[i_][i]
+            value_ = val * 10000000
+            value_ = round(value_)
+            # value_ = float('%.7f' % result_[i_][i])
+            aim_list.append(value_ / 1000000000)
+        result.append(aim_list)
+    result.append(result_[len(result_)-1])
+    result.append(x_list)
+    return result
+
+# getModelShare(["全国", "price_model", "360 F4s, 360 N6, Advan S4\xa0"])
+
+# 获取价格段份额
 def getNational(target):
     target_replace = target.replace('[', '').replace(']', '').replace('"', '')
     x_list = ['2016/02', '2016/03', '2016/04', '2017/01', '2017/02', '2017/03', '2017/04', '2018/01', '2018/02']
@@ -66,7 +133,7 @@ def getNational(target):
     conn = pymssql.connect(server, user, password, "BDCI")
     sql = """
                 SELECT 
-                sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121]) as '2016Q4',sum([2017031])as '2017Q1', sum([2017061]) as '2017Q2', sum([2017091]) as '2017Q3', sum([2017121]) as '2017Q4',sum([2018011])as '201801',sum([2018021])as '201802'
+                """+sql_data+"""
                 ,[价格段]
                 FROM [BDCI_Phone].[dbo].[Summary_1606_1802] where citytier="""+aim_+"""
                 group by [价格段] 
@@ -122,12 +189,12 @@ def getNational(target):
     result = order_1+order_2+order_3+order_4
     result = [result]+[x_list]
     return result
-getNational('"一线"')
+# getNational('"一线"')
 
 
 
 # 获取所有机型添加select_list
-def getModel(paraList):
+def getModelList(paraList):
     conn = pymssql.connect(server, user, password, "BDCI")
     sql = """
                   SELECT modelname FROM (SELECT  distinct(brand+' '+model) as modelname
