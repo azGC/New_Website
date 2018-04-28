@@ -74,14 +74,14 @@ def carOwnerChart(request):
             # }
             return HttpResponse(json.dumps(page_1_model), content_type='application/json')
 
-    else:
-        page_1_brand = getBrandShare(target)
-        page_1_national = getNational(target)
-        page_1_top = getTop()
 
-        dict = {'page_1_brand': page_1_brand,
-                    'page_1_national': page_1_national,
-                    'page_1_top': page_1_top
-                }
-        return HttpResponse(json.dumps(dict), content_type='application/json')
+    page_1_brand = getBrandShare(target)
+    page_1_national = getNational(target)
+    page_1_top = getTop()
+
+    dict = {'page_1_brand': page_1_brand,
+                'page_1_national': page_1_national,
+                'page_1_top': page_1_top
+            }
+    return HttpResponse(json.dumps(dict), content_type='application/json')
 

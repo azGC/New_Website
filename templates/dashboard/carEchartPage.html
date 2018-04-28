@@ -170,11 +170,11 @@
                     });
 
                     <!--Model Share数据-->
-                    var model_ = $("#select_value").text();
+                    var model_ = $("[data-id=select_model]").text();
                     var array2 = [citytier, 'price_model', model_]
                     var json_array2 = JSON.stringify(array2);
                     $.getJSON('{% url 'carEchartPage' %}',{'a':json_array2}, function(ret){
-                        drawmodel(ret.page_1_model);
+                        drawmodel(ret);
                     });
                 });
 
@@ -194,7 +194,6 @@
                 $("#begin").click(function(){
                     var citytier = $("#citytier").val();
                     var model_ = $("[data-id=select_model]").text();
-                    <!--model_=$("button[data-id='select_model']").title-->
                     var array2 = [citytier, 'price_model', model_]
                     var json_array2 = JSON.stringify(array2);
                     $.getJSON('{% url 'carEchartPage' %}',{'a':json_array2}, function(ret_){
@@ -528,7 +527,7 @@
                                 option = null;
 
                                 <!--图例-->
-                                x_list = test_list[4];
+                                <!--x_list = test_list[4];-->
 
                                 var sxAxis=[];
 
@@ -586,17 +585,7 @@
                                                 distance: app.config.distance
                                             }
                                         };
-                                        drawLv1.setOption({
-                                            series: [{
-                                                label: labelOption
-                                            }, {
-                                                label: labelOption
-                                            }, {
-                                                label: labelOption
-                                            }, {
-                                                label: labelOption
-                                            }]
-                                        });
+
                                     }
                                 };
 
@@ -629,19 +618,7 @@
                                     },
                                     legend: {
                                         <!--图例-->
-                                        data: [
-                                            sxAxis[0],
-                                            sxAxis[1],
-                                            sxAxis[2],
-                                            sxAxis[3],
-                                            sxAxis[4],
-                                            sxAxis[5],
-                                            sxAxis[6],
-                                            sxAxis[7],
-                                            sxAxis[8],
-                                            sxAxis[9],
-                                            sxAxis[10]
-                                        ],
+
                                     },
                                     toolbox: {
                                         show: true,
@@ -661,7 +638,7 @@
                                         {
                                             type: 'category',
                                             axisTick: {show: false},
-                                            data: x_list,
+                                            <!--data: x_list,-->
                                             axisLabel:{
                                               rotate:-20, //刻度旋转45度角
                                               interval:0
@@ -685,8 +662,9 @@
                                     series: function(){
                                         var serie=[];
                                         var dataArr=[];
-                                        var aa = test_list[test_list.length-1];
-                                        for (var l =0; l < test_list.length-2; i++){
+                                        var lena = test_list.length;
+                                        var aa = test_list[lena-1];
+                                        for (var l =0; l < lena-2; i++){
                                             dataArr.push(test_list[test_list.length]);
                                         }
                                         for( var i=0;i < aa.length;i++){
