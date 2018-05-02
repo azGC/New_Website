@@ -71,23 +71,11 @@ def getModelShare(target):
                 SELECT * FROM(SELECT
                    [citytier]
                   ,[2016061]
-                  ,[2016071]
-                  ,[2016081]
                   ,[2016091]
-                  ,[2016101]
-                  ,[2016111]
                   ,[2016121]
-                  ,[2017011]
-                  ,[2017021]
                   ,[2017031]
-                  ,[2017041]
-                  ,[2017051]
                   ,[2017061]
-                  ,[2017071]
-                  ,[2017081]
                   ,[2017091]
-                  ,[2017101]
-                  ,[2017111]
                   ,[2017121]
                   ,[2018011]
                   ,[2018021]
@@ -110,10 +98,10 @@ def getModelShare(target):
         aim_list = []
         for i_ in range(0, len(result_)-1):
             val = result_[i_][i]
-            value_ = val * 10000000
+            value_ = val * 1000000000
             value_ = round(value_)
             # value_ = float('%.7f' % result_[i_][i])
-            aim_list.append(value_ / 1000000000)
+            aim_list.append(value_ / 10000000)
         result.append(aim_list)
 
     re_series = []
@@ -128,7 +116,7 @@ def getModelShare(target):
     re_result.append(x_list)  # 添加X轴坐标
     return re_result
 
-getModelShare(["全国", "price_model", "360 F4s, 360 N6, Advan S4\xa0"])
+getModelShare(["全国", "price_model", "苹果 iPhone 8\xa0"])
 
 # 获取价格段份额
 def getNational(target):
