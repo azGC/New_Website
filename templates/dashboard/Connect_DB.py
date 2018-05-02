@@ -115,13 +115,13 @@ def getModelShare(target):
     re_result.append(result_[len(result_) - 1])  # 机型名
     re_result.append(x_list)  # 添加X轴坐标
     return re_result
-
-getModelShare(["全国", "price_model", "苹果 iPhone 8\xa0"])
+# getModelShare(["全国", "price_model", "苹果 iPhone 8\xa0"])
 
 # 获取价格段份额
 def getNational(target):
+    # sql_data =  "sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121]) as '2016Q4',sum([2017031])as '2017Q1', sum([2017061]) as '2017Q2', sum([2017091]) as '2017Q3', sum([2017121]) as '2017Q4'"
     target_replace = target.replace('[', '').replace(']', '').replace('"', '')
-    x_list = ['2016/02', '2016/03', '2016/04', '2017/01', '2017/02', '2017/03', '2017/04', '2018/01', '2018/02']
+    x_list = ['2016/06', '2016/09', '2016/12', '2017/03', '2017/06', '2017/09', '2017/12', '2018/01', '2018/02']
 
     if len(target_replace) == 2:
         aim_ = "'%s'" % target_replace
@@ -186,7 +186,7 @@ def getNational(target):
     result = order_1+order_2+order_3+order_4
     result = [result]+[x_list]
     return result
-# getNational('"一线"')
+getNational('"一线"')
 
 
 

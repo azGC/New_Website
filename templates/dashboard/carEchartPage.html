@@ -38,13 +38,9 @@
 
 
  $(window).on('load', function () {
-
-
  $('.selectpicker').selectpicker({
                 'selectedText': 'cat'
             });
-
-
    // $('.selectpicker').selectpicker('hide');
         });
 
@@ -635,6 +631,7 @@
                                             axisLabel: {
                                                   show: true,
                                                   interval: 'auto',
+                                                   formatter: '{value} %'
                                                 },
 
                                         }
@@ -779,6 +776,7 @@
                                 var drawbrand = echarts.init(document.getElementById('line_2_National'));
                                 option = {
 
+
                                 tooltip: {
                                     trigger: 'axis',
                                     axisPointer: {
@@ -788,6 +786,12 @@
                                             width: 1,
                                             type: 'solid'
                                         }
+                                    }
+                                },
+                                toolbox: {
+                                    feature: {
+                                        dataView: {readOnly: false},
+                                        saveAsImage: {}
                                     }
                                 },
 
