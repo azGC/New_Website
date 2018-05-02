@@ -115,11 +115,20 @@ def getModelShare(target):
             # value_ = float('%.7f' % result_[i_][i])
             aim_list.append(value_ / 1000000000)
         result.append(aim_list)
-    result.append(result_[len(result_)-1])
-    result.append(x_list)
-    return result
 
-# getModelShare(["全国", "price_model", "360 F4s, 360 N6, Advan S4\xa0"])
+    re_series = []
+    for lab in range(len(result)):
+        data_series = {'data': [], 'type': 'line', 'name': ''}
+        data_series['name'] = result_[len(result_) - 1][lab]
+        data_series['data'] = result[lab]
+        re_series.append(data_series)
+    re_result = []
+    re_result.append(re_series)
+    re_result.append(result_[len(result_) - 1])  # 机型名
+    re_result.append(x_list)  # 添加X轴坐标
+    return re_result
+
+getModelShare(["全国", "price_model", "360 F4s, 360 N6, Advan S4\xa0"])
 
 # 获取价格段份额
 def getNational(target):

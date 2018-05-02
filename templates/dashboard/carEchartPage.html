@@ -526,10 +526,8 @@
                                 var app = {};
                                 option = null;
 
-                                <!--图例-->
-                                <!--x_list = test_list[4];-->
-
-                                var sxAxis=[];
+                                <!--数据-->
+                                var data_ = [] = test_list[0]
 
                                 var posList = [
                                     'left', 'right', 'top', 'bottom',
@@ -575,18 +573,7 @@
                                     verticalAlign: 'middle',
                                     position: 'insideBottom',
                                     distance: 15,
-                                    onChange: function () {
-                                        var labelOption = {
-                                            normal: {
-                                                rotate: app.config.rotate,
-                                                align: app.config.align,
-                                                verticalAlign: app.config.verticalAlign,
-                                                position: app.config.position,
-                                                distance: app.config.distance
-                                            }
-                                        };
 
-                                    }
                                 };
 
 
@@ -618,6 +605,7 @@
                                     },
                                     legend: {
                                         <!--图例-->
+                                        data:test_list[1]
 
                                     },
                                     toolbox: {
@@ -638,12 +626,7 @@
                                         {
                                             type: 'category',
                                             axisTick: {show: false},
-                                            <!--data: x_list,-->
-                                            axisLabel:{
-                                              rotate:-20, //刻度旋转45度角
-                                              interval:0
-
-                                            }
+                                            data: test_list[2],
                                         }
                                     ],
                                     yAxis: [
@@ -652,33 +635,12 @@
                                             axisLabel: {
                                                   show: true,
                                                   interval: 'auto',
-                                                  formatter: '{value} %'
                                                 },
-                                            <!--min: 0,-->
-                                            <!--max: 1-->
+
                                         }
                                     ],
 
-                                    series: function(){
-                                        var serie=[];
-                                        var dataArr=[];
-                                        var lena = test_list.length;
-                                        var aa = test_list[lena-1];
-                                        for (var l =0; l < lena-2; i++){
-                                            dataArr.push(test_list[test_list.length]);
-                                        }
-                                        for( var i=0;i < aa.length;i++){
-                                        var item={
-                                        name:aa[i],
-                                        data:dataArr[i],
-                                        <!--drawmodel.setOption(option, true);-->
-                                        type:'line',
-                                        label: {formatter:'{value}%'},
-                                        }
-                                        serie.push(item);
-                                        };
-                                        return serie;
-                                    }()
+                                    series:data_
                                 };
 
 
