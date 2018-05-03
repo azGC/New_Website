@@ -149,6 +149,7 @@
                     drawbrand(ret.page_1_brand);
                     drawnational(ret.page_1_national);
                     drawStacked(ret.page_1_top);
+                    drawNewModel(ret.page_1_new);
                 });
 
                 <!--城市等级选择更改-->
@@ -163,6 +164,7 @@
                     $.getJSON('{% url 'carEchartPage' %}',{'a':json_array1}, function(ret){
                         drawbrand(ret.page_1_brand);
                         drawnational(ret.page_1_national);
+                        drawNewModel(ret.page_1_new);
                     });
 
                     <!--Model Share数据-->
@@ -843,8 +845,164 @@
                             <!--/chart_lv1-->
                         </div>
                     </div>
-                </div>
                 <!--/价格段全国占比行 -->
+
+                <!-- 新机全国占比行 -->
+                     <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="x_panel">
+                            <!-- 标题-->
+                            <div class="col-md-6">
+                                <h2>New Model Share<br>新机份额</h2>
+                            </div>
+                            <!-- 价格段选择按钮 -->
+
+                                <!--/价格段选择按钮 -->
+
+                            <!--/标题-->
+                            <!-- chart_new model-->
+                            <div id="line_3_NewModel" style="width: 100%;height:300%;">
+                                <script type="text/javascript">
+
+                                function drawNewModel(test_list){
+                                var dom = document.getElementById("container");
+                                var drawmodel = echarts.init(document.getElementById('line_3_NewModel'));
+                                var app = {};
+                                option = null;
+
+                                var posList = [
+                                    'left', 'right', 'top', 'bottom',
+                                    'inside',
+                                    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+                                    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+                                ];
+
+                                app.configParameters = {
+                                    rotate: {
+                                        min: -90,
+                                        max: 90
+                                    },
+                                    align: {
+                                        options: {
+                                            left: 'left',
+                                            center: 'center',
+                                            right: 'right'
+                                        }
+                                    },
+                                    verticalAlign: {
+                                        options: {
+                                            top: 'top',
+                                            middle: 'middle',
+                                            bottom: 'bottom'
+                                        }
+                                    },
+                                    position: {
+                                        options: echarts.util.reduce(posList, function (map, pos) {
+                                            map[pos] = pos;
+                                            return map;
+                                        }, {})
+                                    },
+                                    distance: {
+                                        min: 0,
+                                        max: 100
+                                    }
+                                };
+
+                                app.config = {
+                                    rotate: 90,
+                                    align: 'left',
+                                    verticalAlign: 'middle',
+                                    position: 'insideBottom',
+                                    distance: 15,
+
+                                };
+
+
+                                var labelOption = {
+                                    normal: {
+                                        show: false,
+                                        position: app.config.position,
+                                        distance: app.config.distance,
+                                        align: app.config.align,
+                                        verticalAlign: app.config.verticalAlign,
+                                        rotate: app.config.rotate,
+                                        formatter: '{c}  {name|{a}}',
+                                        fontSize: 16,
+                                        rich: {
+                                            name: {
+                                                textBorderColor: '#fff'
+                                            }
+                                        }
+                                    }
+                                };
+
+                                option = {
+                                    color: ['#003366', '#006699', '#4cabce', '#e5323e', '#319ae5', '#e5c131', '#ad96b5', '#0c5259'],
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        axisPointer: {
+                                            type: 'shadow'
+                                        }
+                                    },
+                                    legend: {
+                                        <!--图例-->
+                                        data:test_list[0]
+
+                                    },
+                                    toolbox: {
+                                        show: true,
+                                        orient: 'vertical',
+                                        left: 'right',
+                                        top: 'center',
+                                        feature: {
+                                            mark: {show: true},
+                                            dataView: {show: true, readOnly: false},
+                                            magicType: {show: true, type: ['line', 'bar']},
+                                            restore: {show: true},
+                                            saveAsImage: {show: true}
+                                        }
+                                    },
+                                    calculable: true,
+                                    xAxis: [
+                                        {
+                                            type: 'category',
+                                            axisTick: {show: false},
+                                            data: test_list[0],
+                                        }
+                                    ],
+                                    yAxis: [
+                                        {
+                                            type: 'value',
+                                            axisLabel: {
+                                                  show: true,
+                                                  interval: 'auto',
+                                                   formatter: '{value} %'
+                                                },
+
+                                        }
+                                    ],
+
+                                    series: [
+                                        {
+                                            <!--name:'直接访问',-->
+                                            type:'bar',
+                                            barWidth: '10%',
+                                            data:test_list[1]
+                                        }
+                                    ]
+                                };
+
+
+                                drawmodel.setOption(option, true);
+
+
+                                }
+
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/新机全国占比行 -->
 
             </div>
             <!--/图标行 -->

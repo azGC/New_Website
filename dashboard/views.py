@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.http import HttpResponse
 from templates.dashboard.Connect_DB \
-    import getBrandShare, getModelShare, getModelList, getNational, getTop
+    import getBrandShare, getModelShare, getModelList, getNational, getTop, getNewModel
 import json
 from django import forms
 from django.shortcuts import render, render_to_response
@@ -66,22 +66,19 @@ def carOwnerChart(request):
     if target != '"全国"':
         target_list = eval(target)
         if len(target_list) == 3:
-            # model_number = target_list[2].count(',') + 1
             page_1_model = getModelShare(target_list)
-            # dict = {
-            #     'page_1_model': page_1_model,
-            #     'model_number': model_number
-            # }
             return HttpResponse(json.dumps(page_1_model), content_type='application/json')
 
 
     page_1_brand = getBrandShare(target)
     page_1_national = getNational(target)
     page_1_top = getTop()
+    page_1_new = getNewModel(target)
 
     dict = {'page_1_brand': page_1_brand,
                 'page_1_national': page_1_national,
-                'page_1_top': page_1_top
+                'page_1_top': page_1_top,
+                'page_1_new': page_1_new
             }
     return HttpResponse(json.dumps(dict), content_type='application/json')
 

@@ -11,7 +11,7 @@ password = "asdf1234"
 # 修改sql date
 sql_data = "sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121]) as '2016Q4',sum([2017031])as '2017Q1', sum([2017061]) as '2017Q2', sum([2017091]) as '2017Q3', sum([2017121]) as '2017Q4',sum([2018011])as '201801',sum([2018021])as '201802'"
 
-# 获取品牌份额
+# 获取品牌份额 每次修改日期
 def getBrandShare(target):
     target_replace = target.replace('[', '').replace(']', '').replace('"', '')
     x_list = ['2016Q2','2016Q3','2016Q4', '2017Q1', '2017Q2', '2017Q3', '2017Q4', '201801', '201802']
@@ -55,7 +55,7 @@ def getBrandShare(target):
     result.append(x_list)
     return result
 
-# 获取机型份额
+# 获取机型份额 每次修改日期
 def getModelShare(target):
     # print(target)
 
@@ -117,7 +117,36 @@ def getModelShare(target):
     return re_result
 # getModelShare(["全国", "price_model", "苹果 iPhone 8\xa0"])
 
-# 获取价格段份额
+# 获取top15机型 每次修改日期
+def getTop():
+    conn = pymssql.connect(server, user, password, "BDCI")
+    sql = """
+                SELECT TOP 15 
+                 [brand]+' '+[model] as name
+                ,[2018011]
+                ,[2018021]
+                FROM [BDCI_Phone].[dbo].[Summary_1606_1802] 
+                where citytier='全国' and brand != '其它' and model != '其它'
+                order by [2018021] desc
+                """
+    df = pd.read_sql_query(sql, conn)
+    name = df['name'].tolist()
+    this_month = df['2018021'].tolist()
+    last_month = df['2018011'].tolist()
+
+    for i_list in range(0, len(this_month)):
+        this_month[i_list] = float('%.4f' % this_month[i_list])
+        last_month[i_list] = float('%.4f' % last_month[i_list])
+
+    result = []
+    result.append(name)
+    result.append(this_month)
+    result.append(last_month)
+
+    return result
+# getTop()
+
+# 获取价格段份额 每次修改日期
 def getNational(target):
     # sql_data =  "sum([2016061]) as '2016Q2', sum([2016091]) as '2016Q3', sum([2016121]) as '2016Q4',sum([2017031])as '2017Q1', sum([2017061]) as '2017Q2', sum([2017091]) as '2017Q3', sum([2017121]) as '2017Q4'"
     target_replace = target.replace('[', '').replace(']', '').replace('"', '')
@@ -186,7 +215,33 @@ def getNational(target):
     result = order_1+order_2+order_3+order_4
     result = [result]+[x_list]
     return result
-getNational('"一线"')
+# getNational('"一线"')
+
+# 获取新机份额
+def getNewModel(target):
+    target_ = target[1:3]
+    city = "'%s'" % target_
+    conn = pymssql.connect(server, user, password, "BDCI")
+    sql = """
+                SELECT 
+                   [brand]+' '+[model] as name
+                  ,[2018021] as share
+                FROM [BDCI_Phone].[dbo].[Summary_1606_1802]
+                where [citytier]="""+city+"""
+                and [上市时间] Between '2018-02-01' And '2018-02-1'
+            """
+    print (sql)
+    df = pd.read_sql_query(sql, conn)
+    name_list = df['name'].tolist()
+    share_ = df['share'].tolist()
+    for i in range(len(share_)):
+        share_[i] = share_[i]*100
+    result = []
+    result.append(name_list)
+    result.append(share_)
+    return result
+# getNewModel('全国')
+
 
 
 
@@ -202,34 +257,7 @@ def getModelList(paraList):
     model_list = df['modelname'].tolist()
     return model_list
 
-# 获取top20机型 每次修改日期
-def getTop():
-    conn = pymssql.connect(server, user, password, "BDCI")
-    sql = """
-                SELECT TOP 15 
-                 [brand]+' '+[model] as name
-                ,[2018011]
-                ,[2018021]
-                FROM [BDCI_Phone].[dbo].[Summary_1606_1802] 
-                where citytier='全国' and brand != '其它' and model != '其它'
-                order by [2018021] desc
-                """
-    df = pd.read_sql_query(sql, conn)
-    name = df['name'].tolist()
-    this_month = df['2018021'].tolist()
-    last_month = df['2018011'].tolist()
 
-    for i_list in range(0, len(this_month)):
-        this_month[i_list] = float('%.4f' % this_month[i_list])
-        last_month[i_list] = float('%.4f' % last_month[i_list])
-
-    result = []
-    result.append(name)
-    result.append(this_month)
-    result.append(last_month)
-
-    return result
-# getTop()
 
 
 
