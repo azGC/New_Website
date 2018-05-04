@@ -137,6 +137,13 @@
                     drawAI(ret.page_1_AI);
                     drawFace(ret.page_1_Face);
                 });
+                <!--Model数据-->
+                    <!--var model_ = $("[data-id=select_model]").text();-->
+                    var array2 = [citytier, 'price_model', '苹果 iPhone 6, 苹果 iPhone 7, 苹果 iPhone 8, 苹果 iPhone X"']
+                    var json_array2 = JSON.stringify(array2);
+                    $.getJSON('{% url 'carEchartPage' %}',{'a':json_array2}, function(ret){
+                        drawmodel(ret);
+                    });
 
                 <!--城市等级选择更改-->
                 $("#citytier").change(function(){

@@ -60,7 +60,7 @@ def getBrandShare(target):
 
 # 获取机型份额 每次修改日期
 def getModelShare(target):
-    # print(target)
+
 
     x_list = ['2016Q2','2016Q3','2016Q4', '2017Q1', '2017Q2', '2017Q3', '2017Q4', '201801', '201802']
     city = target[0]
@@ -241,7 +241,6 @@ def getNewModel(target):
                 where [citytier]="""+city+"""
                 and [上市时间] Between '2018-02-01' And '2018-02-1'
             """
-    print (sql)
     df = pd.read_sql_query(sql, conn)
     name_list = df['name'].tolist()
     share_ = df['share'].tolist()

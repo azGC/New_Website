@@ -84,7 +84,7 @@ def carOwnerChart(request):
                 'page_1_new': page_1_new,
                 'page_1_Face': page_1_Face,
                 'page_1_AI': page_1_AI,
-                'page_1_BezelL': page_1_BezelL
+                'page_1_BezelL': page_1_BezelL,
             }
     return HttpResponse(json.dumps(dict), content_type='application/json')
 
