@@ -58,14 +58,11 @@
                         <!--<i class="fa fa-paw"></i> -->
                         <span>Back Home</span></a>
                 </div>
-
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                 </div>
                 <!-- /menu profile quick info -->
-
                 <br/>
-
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section">
@@ -84,7 +81,6 @@
                     </div>
                 </div>
                 <!-- /sidebar menu -->
-
             </div>
         </div>
 
@@ -118,13 +114,11 @@
                         var d = "<option name='chkId' selected='selected' value="+ret[i]+">"+ret[i]+"</option>"
                         selDom.append(d);//添加option
                     }
-
                     for (var i = 5; i <ret.length; i++){
                         var d = "<option name='chkId' value="+ret[i]+">"+ret[i]+"</option>"
                         selDom.append(d);//添加option
                     }
                 })
-
             }
             select_model()
 
@@ -144,13 +138,12 @@
                     drawAI(ret.page_1_AI);
                     drawFace(ret.page_1_Face);
                 });
-                <!--Model数据-->
+                <!--Model数据 为提升加载速度手动设置初始加载数据-->
                 var array2 = [citytier, 'price_model', '1米 M4-C, 360 F4s, 360 F5, 360 N6, 360 N6 Lite ']
                 var json_array2 = JSON.stringify(array2);
                 $.getJSON('{% url 'carEchartPage' %}',{'a':json_array2}, function(ret){
                     drawmodel(ret);
                 });
-
 
                 <!--城市等级选择更改-->
                 $("#citytier").change(function(){
@@ -198,13 +191,11 @@
                         drawmodel(ret_);
                     });
                 });
-
             });
-
-
 
             </script>
             <!--/接收数据库返回信息-->
+
 
             <!-- 图表行-->
             <div class="row">
@@ -232,6 +223,7 @@
                     </form>
                 </div>
                 <!-- /select tiles-->
+
                 <!-- 品牌与机型份额行-->
                 <div class="row">
                     <!-- 品牌份额图框-->
@@ -1037,7 +1029,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <!-- 全面屏-->
                     <div class="col-md-4 col-sm-4 col-xs-12">
@@ -1476,10 +1467,9 @@
                     <!--/人脸识别-->
                 </div>
                 <!--/科技趋势行-->
-
-
             </div>
             <!--/图表行 -->
+
 
         </div>
     </div>
