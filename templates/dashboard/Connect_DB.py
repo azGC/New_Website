@@ -2,6 +2,7 @@
 from __future__ import unicode_literals,division
 import pymssql
 import pandas as pd
+import json
 
 
 server = "SQLDEV02\sql"
@@ -221,8 +222,16 @@ def getNational(target):
 
 # 获取新机份额
 def getNewModel(target):
-    target_ = target[1:3]
-    city = "'%s'" % target_
+    target_list = eval(target)
+    if target_list == '全国':
+        city = "'%s'" % target_list
+    else:
+        if len(target_list[0]) < 4:
+            city = target_list[0]
+            city = "'%s'" % city
+        else:
+            city = '全国'
+
     conn = pymssql.connect(server, user, password, "BDCI")
     sql = """
                 SELECT 
@@ -232,6 +241,7 @@ def getNewModel(target):
                 where [citytier]="""+city+"""
                 and [上市时间] Between '2018-02-01' And '2018-02-1'
             """
+    print (sql)
     df = pd.read_sql_query(sql, conn)
     name_list = df['name'].tolist()
     share_ = df['share'].tolist()
@@ -241,7 +251,7 @@ def getNewModel(target):
     result.append(name_list)
     result.append(share_)
     return result
-# getNewModel('全国')
+# getNewModel("'全国'")
 
 def getTech(target):
     # 防止sql注入
@@ -267,7 +277,7 @@ def getTech(target):
     result.append(value_)
     result.append(keylist)
     return result
-getTech("'人脸识别'")
+# getTech("'人脸识别'")
 
 # 获取所有机型添加select_list
 def getModelList(paraList):

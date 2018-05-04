@@ -42,6 +42,7 @@
                     });
            // $('.selectpicker').selectpicker('hide');
                 });
+
     </script>
 </head>
 
@@ -104,22 +105,7 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-            <!--select tiles-->
-            <div class="col-lg-13 ">
-                <form method="get">
-                    <div class="form-group ">
-                        <select class="form-control" id="citytier">
-                            <option selected="selected">全国</option>
-                            <option>一线</option>
-                            <option>二线</option>
-                            <option>三线</option>
-                            <option>四线</option>
-                        </select>
-                    </div>
 
-                </form>
-            </div>
-            <!-- /select tiles-->
 
             <!--接收数据库返回信息-->
             <script type="text/javascript">
@@ -201,6 +187,7 @@
             });
 
 
+
             </script>
             <!--/接收数据库返回信息-->
 
@@ -214,6 +201,22 @@
                         </div>
                     </div>
                 </div>
+                <!--select tiles-->
+                <div class="col-lg-13 ">
+                    <form method="get">
+                        <div class="form-group ">
+                            <select class="form-control" id="citytier">
+                                <option selected="selected">全国</option>
+                                <option>一线</option>
+                                <option>二线</option>
+                                <option>三线</option>
+                                <option>四线</option>
+                            </select>
+                        </div>
+
+                    </form>
+                </div>
+                <!-- /select tiles-->
                 <!-- 品牌与机型份额行-->
                 <div class="row">
                     <!-- 品牌份额图框-->
@@ -486,6 +489,7 @@
                                 }
 
 
+
                                 </script>
                             </div>
                             <!--/chart_lv1-->
@@ -627,6 +631,10 @@
                                             type: 'category',
                                             axisTick: {show: false},
                                             data: test_list[2],
+                                    axisLabel:{
+                                              rotate:-20, //刻度旋转45度角
+                                              interval:0
+                                            }
                                         }
                                     ],
                                     yAxis: [
@@ -649,6 +657,7 @@
 
 
                                 }
+
 
 
                                 </script>
@@ -751,6 +760,7 @@
                                 }
 
 
+
                                 </script>
                             </div>
                             <!--/chart_purpose-->
@@ -843,6 +853,7 @@
 
                                 drawbrand.setOption(option, true);
                                 }
+
 
 
                                 </script>
@@ -995,6 +1006,7 @@
                                 }
 
 
+
                                 </script>
                             </div>
                         </div>
@@ -1121,6 +1133,10 @@
                                             type: 'category',
                                             axisTick: {show: false},
                                             data: test_list[1],
+                                            axisLabel:{
+                                              rotate:-20, //刻度旋转45度角
+                                              interval:0
+                                            }
                                         }
                                     ],
                                     yAxis: [
@@ -1144,6 +1160,7 @@
                                 };
                                 drawmodel.setOption(option, true);
                                 }
+
 
 
                                 </script>
@@ -1261,6 +1278,10 @@
                                             type: 'category',
                                             axisTick: {show: false},
                                             data: test_list[1],
+                                            axisLabel:{
+                                              rotate:-20, //刻度旋转45度角
+                                              interval:0
+                                            }
                                         }
                                     ],
                                     yAxis: [
@@ -1284,6 +1305,7 @@
                                 };
                                 drawmodel.setOption(option, true);
                                 }
+
 
 
                                 </script>
@@ -1401,6 +1423,10 @@
                                             type: 'category',
                                             axisTick: {show: false},
                                             data: test_list[1],
+                                            axisLabel:{
+                                              rotate:-20, //刻度旋转45度角
+                                              interval:0
+                                            }
                                         }
                                     ],
                                     yAxis: [
@@ -1424,6 +1450,7 @@
                                 };
                                 drawmodel.setOption(option, true);
                                 }
+
 
 
                                 </script>
