@@ -87,7 +87,6 @@ def getModelShare(target):
                 WHERE  citytier = """+city+""" and (name ="""+model+""" )
                 
             """
-    print(sql)
     df = pd.read_sql_query(sql, conn)
     result_ = []
     keylist = df.keys().tolist()
