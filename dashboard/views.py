@@ -15,11 +15,9 @@ from django.shortcuts import render,render_to_response
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 
-
 class UserForm(forms.Form):
     username = forms.CharField(label='username', max_length=50)
     password = forms.CharField(label='password', widget=forms.PasswordInput())
-
 
 def my_login(request):
     # next__ = request.get[next]
@@ -50,7 +48,6 @@ def my_login(request):
 #     #清除cookie里保存的username
 #     logout(request)
 #     return request
-
 
 # index page
 def index(request):
@@ -128,39 +125,6 @@ def LTPChart(request):
     r_dtc = LTP(text)
     return HttpResponse(json.dumps(r_dtc), content_type='application/json')
 
-
-    #
-    # # 词性url
-    # url_pos = "https://api.ltp-cloud.com/analysis/?" \
-    #       "api_key=C1H4c7k3j9LIApERArIRNF7ARHKRIPdqWI9xhMue&" \
-    #       "text={0}" \
-    #       "&pattern=pos" \
-    #       "&format=plain".format(text)
-    #
-    # result_pos = urllib.request.urlopen(url_pos)  # POST method
-    # content_pos = result_pos.read().strip().decode('utf-8')
-    # content_pos_list = content_pos.split()
-    # return_text_pos = ''
-    # for i in range(0,len(content_pos_list)):
-    #     if '__' in content_pos_list[i]:
-    #         word = content_pos_list[i].replace("__", "_ _").replace(" _", "(")
-    #     else:
-    #         word = content_pos_list[i].replace("_", "(")
-    #     word += ')  '
-    #     return_text_pos += word
-    #
-    # # 分词url
-    # url_ws = "https://api.ltp-cloud.com/analysis/?" \
-    #       "api_key=C1H4c7k3j9LIApERArIRNF7ARHKRIPdqWI9xhMue&" \
-    #       "text={0}" \
-    #       "&pattern=ws" \
-    #       "&format=plain".format(text)
-    # result_ws = urllib.request.urlopen(url_ws)  # POST method
-    # content_ws = result_ws.read().strip().decode('utf-8').replace(" ", "    ")
-    # return_text_ws = content_ws
-    # r_dtc = {'pos': return_text_pos, 'ws': return_text_ws}
-    # return HttpResponse(json.dumps(r_dtc), content_type='application/json')
-
 # get CP
 # @login_required
 def CPChart(request):
@@ -168,7 +132,6 @@ def CPChart(request):
     data_cluster = CP_get_cluster()
     dict_ = {'cluster': data_cluster}
     return HttpResponse(json.dumps(dict_), content_type='application/json')
-
 
 # 配置参数
 # get Config_company
@@ -191,7 +154,6 @@ def ConfigModleChart(request):
     id_ = request.GET.get('modelId', '')
     content_pos = Config_get_config_local(id_)
     return HttpResponse(json.dumps(content_pos), content_type='application/json')
-
 
 # 二手车价格
 # get Price_company
