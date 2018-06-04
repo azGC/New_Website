@@ -360,7 +360,7 @@ def people_get_path(company):
         for i in range(0, len(targetList)):
             for key in dic_number_id.keys():
                 if key == targetList[i]:
-                    targetList[i]=dic_number_id[key]
+                    targetList[i] = dic_number_id[key]
     change_ch(sourceList)
     change_ch(targetList)
     # 去重
