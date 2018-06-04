@@ -3,6 +3,9 @@ from __future__ import unicode_literals,division
 import pymssql
 import pandas as pd
 import urllib
+import os
+from pyltp import Segmentor
+from pyltp import Postagger
 
 server = "SQLDEV02\sql"
 server = "127.0.0.1"
@@ -384,6 +387,32 @@ def people_get_path(company):
         path_data["links"].append(dit_)
 
     return path_data
+
+# LTP_page
+def LTP (input_words):
+    LTP_DATA_DIR = 'D:\office\ltp_data'  # ltp模型目录的路径
+    cws_model_path = os.path.join(LTP_DATA_DIR, 'cws.model')  # 分词模型路径，模型名称为`cws.model`
+    pos_model_path = os.path.join(LTP_DATA_DIR, 'pos.model')  # 词性标注模型路径，模型名称为`pos.model`
+
+    segmentor = Segmentor()  # 初始化分词实例
+    segmentor.load(cws_model_path)  # 加载模型
+    words = segmentor.segment(input_words)  # 分词
+    return_text_ws = ' '.join(words).replace(' ', '  ')
+    print(return_text_ws)
+    segmentor.release()  # 释放模型
+
+    postagger = Postagger()  # 初始化词性实例
+    postagger.load(pos_model_path)  # 加载模型
+    postags = postagger.postag(words)  # 词性标注
+    re_pos = ''
+    for word, tag in zip(words, postags):
+        re_pos = re_pos + word + '(' + tag + ')  '
+    return_text_pos = re_pos
+    print(re_pos)
+    postagger.release()  # 释放模型
+    r_dtc = {'pos': return_text_pos, 'ws': return_text_ws}
+    return r_dtc
+
 
 # CP_page
 def CP_get_cluster():
