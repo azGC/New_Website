@@ -437,11 +437,11 @@ def CP_get_cluster():
     return cluster_data
 
 # ConfigPage_page
-def Config_get_config(id_):
-    url_pos = "http://auto.chexun.com/singleModledata.do?modelId={0}".format(id_)
-    result_pos = urllib.request.urlopen(url_pos)  # POST method
-    content_pos = result_pos.read().strip().decode('utf-8')
-    return content_pos
+# def Config_get_config(id_):
+#     url_pos = "http://auto.chexun.com/singleModledata.do?modelId={0}".format(id_)
+#     result_pos = urllib.request.urlopen(url_pos)  # POST method
+#     content_pos = result_pos.read().strip().decode('utf-8')
+#     return content_pos
 
 
 

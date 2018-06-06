@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.http import HttpResponse
-import urllib.request
-import urllib.parse
-import urllib
 import pandas as pd
 import time
 from templates.dashboard.Connect_DB \
